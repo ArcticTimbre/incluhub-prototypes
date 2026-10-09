@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Incluhub Prototypes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--c1:#140D0E;--c2:#DCD3C1;--c3:#5C222B;--c4:#855E4A;--c5:#7C7C75}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;background:var(--c1);color:var(--c2);font-family:Inter,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--c5)}
+  h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(36px,6vw,56px);margin:10px 0 8px;text-align:center}
+  p.lead{color:#A9A39A;text-align:center;max-width:520px;margin-bottom:40px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,340px));gap:20px;justify-content:center;width:100%}
+  a.card{display:block;text-decoration:none;color:inherit;border:1px solid #2E2224;border-radius:16px;overflow:hidden;background:#1C1214;transition:.2s}
+  a.card:hover{border-color:var(--c4);transform:translateY(-3px)}
+  .pv{height:150px;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:30px;letter-spacing:.12em}
+  .k{background:linear-gradient(150deg,#3D2A22,#231612);color:#E9D6BE}
+  .y{background:linear-gradient(150deg,#5C222B,#140D0E);color:var(--c2)}
+  .bd{padding:18px 20px}
+  .bd b{font-weight:500;font-size:16px;display:block;color:#EFE9DD}
+  .bd span{font-size:13px;color:#A9A39A}
+  .go{margin-top:12px;font-size:13px;color:var(--c2)}
+  footer{margin-top:48px;font-size:11px;letter-spacing:.3em;color:var(--c5)}
+</style>
+</head>
+<body>
+  <div class="eyebrow">Private brand ecosystem</div>
+  <h1>Prototype previews</h1>
+  <p class="lead">Interactive UX prototypes. All data shown is sample data.</p>
+  <div class="grid">
+    <a class="card" href="kosarah.html"><div class="pv k">HOUSE OF KOSARAH</div><div class="bd"><b>House of Kosarah</b><span>Chamber Kosarah: client prototype</span><div class="go">Open prototype →</div></div></a>
+    <a class="card" href="your-brand.html"><div class="pv y">YOUR BRAND</div><div class="bd"><b>Your Brand</b><span>White-label sample for any brand</span><div class="go">Open prototype →</div></div></a>
+  </div>
+  <footer>POWERED BY INCLUHUB</footer>
+</body>
+</html>

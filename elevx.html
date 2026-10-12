@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>elevX Network · Powered by Incluhub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* elevX palette — charcoal, stone & cotton */
+    --c1:#151413; --c2:#ECE8E1; --c3:#2E2925; --c4:#8A7F72; --c5:#7A7670;
+    --bg:#F4F3F0; --surface:#F9F8F6; --card:#FFFFFE; --soft:#EEECE7; --soft2:#E2DED6;
+    --line:#E5E2DB; --ink:var(--c1); --ink2:#474441; --muted:var(--c5);
+    --espresso:var(--c1); --espresso2:#232120; --espresso3:#2F2C2A; --sideText:var(--c2); --sideMuted:#8F8B85;
+    --accent:var(--c3); --accent2:var(--c4); --burgundy:#B3261E; --sage:#F0EDE7; --sageInk:var(--c3);
+    --gold:#9C8F7E; --green:#4E9A5B; --red:#B3261E;
+    --serif:'Cormorant Garamond', Georgia, serif; --sans:'Inter', system-ui, sans-serif;
+    --r:14px; --shadow:0 1px 2px rgba(20,13,14,.04), 0 6px 24px rgba(20,13,14,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  input,textarea,select{font:inherit;color:inherit}
+  svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .serif{font-family:var(--serif)}
+  .muted{color:var(--muted)}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#D3CBBB;border-radius:8px}::-webkit-scrollbar-track{background:transparent}
+
+  /* ---------- Layout ---------- */
+  .app{display:grid;grid-template-columns:268px 1fr;height:100vh}
+  .side{background:var(--espresso);color:var(--sideText);display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .side::after{content:"";position:absolute;inset:auto 0 0 0;height:280px;pointer-events:none;
+    background:radial-gradient(120% 80% at 70% 100%, rgba(180,138,90,.18), transparent 60%);}
+  .side-scroll{overflow-y:auto;flex:1;padding:0 14px 16px;position:relative;z-index:1}
+  .side-scroll::-webkit-scrollbar-thumb{background:#2F2C2A}
+  .brand{display:flex;align-items:center;gap:12px;padding:22px 20px 18px}
+  .brand .wm{font-family:var(--serif);letter-spacing:.22em;font-size:15px;line-height:1.1;color:#EFE9DD}
+  .brand .tag{font-size:8.5px;letter-spacing:.2em;color:var(--sideMuted);margin-top:4px}
+  .space{margin:0 0 14px;border:1px solid #2F2C2A;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;width:100%;text-align:left;transition:.2s}
+  .space:hover{background:var(--espresso2)}
+  .space .ic{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#8A7F72,#2E2925);display:grid;place-items:center;font-family:var(--serif);font-size:18px;color:#EFE9DD}
+  .space b{display:block;font-weight:500;font-size:13.5px;color:#EFE9DD}
+  .space small{font-size:11px;color:var(--sideMuted)}
+  .create-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#ECE8E1;color:var(--espresso);border-radius:10px;padding:10px;font-weight:500;margin-bottom:14px;transition:.2s}
+  .create-btn:hover{background:#fff}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:8.5px 12px;border-radius:9px;color:#CFC7B8;width:100%;text-align:left;font-size:13.5px;transition:.15s;position:relative}
+  .nav-item:hover{background:var(--espresso2);color:#fff}
+  .nav-item.active{background:var(--espresso3);color:#fff}
+  .nav-item .badge{margin-left:auto;background:#2E2925;color:#fff;font-size:10.5px;border-radius:20px;padding:1px 7px;font-weight:500}
+  .nav-item .dot{margin-left:auto;width:7px;height:7px;border-radius:50%;background:#B3261E}
+  .sec-h{display:flex;align-items:center;justify-content:space-between;font-size:10.5px;letter-spacing:.14em;color:var(--sideMuted);padding:18px 12px 6px;text-transform:uppercase}
+  .sec-h button{color:var(--sideMuted);display:grid;place-items:center;width:20px;height:20px;border-radius:6px}
+  .sec-h button:hover{background:var(--espresso3);color:#fff}
+  .nav-item .hash{color:var(--sideMuted);width:18px;text-align:center;font-size:15px}
+  .nav-item.unread{color:#fff;font-weight:500}
+  .dm-av{position:relative}
+  .dm-av .on{position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border-radius:50%;background:#5DBB6E;border:2px solid var(--espresso)}
+  .side-foot{position:relative;z-index:1;padding:14px 22px 18px;border-top:1px solid #2F2C2A;display:flex;align-items:center;justify-content:space-between}
+  .side-foot .motto{font-family:var(--serif);font-size:19px;line-height:1.1;color:#EFE9DD}
+  .powered{font-size:10px;letter-spacing:.14em;color:var(--sideMuted);display:flex;align-items:center;gap:6px;text-transform:uppercase}
+
+  .main{display:flex;flex-direction:column;min-width:0;height:100vh}
+  .top{height:68px;flex-shrink:0;display:flex;align-items:center;gap:16px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .search{flex:1;max-width:520px;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px;color:var(--muted)}
+  .search input{border:0;outline:0;background:transparent;flex:1;font-size:13px}
+  .kbd{font-size:10.5px;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+  .icon-btn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--ink2);position:relative;transition:.15s}
+  .icon-btn:hover{background:var(--soft)}
+  .icon-btn .ping{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#B3261E;border:1.5px solid var(--surface)}
+  .me{display:flex;align-items:center;gap:10px;padding-left:18px;border-left:1px solid var(--line)}
+  .me b{font-weight:500;display:block;font-size:13.5px}
+  .me small{color:var(--muted);font-size:11.5px}
+
+  .view{flex:1;overflow:hidden;display:none}
+  .view.active{display:flex}
+  .scroll{overflow-y:auto;flex:1;min-width:0}
+  .pad{padding:28px 32px 40px}
+  .rpanel{width:360px;flex-shrink:0;border-left:1px solid var(--line);background:var(--surface);overflow-y:auto;padding:24px 22px}
+
+  /* ---------- Atoms ---------- */
+  .av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:500;flex-shrink:0;position:relative;overflow:hidden;letter-spacing:.02em}
+  .av::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 30% 20%,rgba(255,255,255,.22),transparent 60%)}
+  .stack{display:flex}.stack .av{border:2px solid var(--card);margin-left:-8px}.stack .av:first-child{margin-left:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:3px 10px;border-radius:20px;background:var(--soft);color:var(--ink2);white-space:nowrap}
+  .chip.official{background:#EFE8DD;color:var(--accent)}
+  .chip.green{background:#E6EFE3;color:#3F6B44}
+  .chip.amber{background:#F6EAD6;color:#8A5B1E}
+  .chip.blue{background:#E5EAF0;color:#3E5670}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;font-weight:500;font-size:13px;transition:.15s;white-space:nowrap}
+  .btn.primary{background:var(--espresso);color:#F3EEE4}.btn.primary:hover{background:var(--accent)}
+  .btn.ghost{border:1px solid var(--line);background:var(--card)}.btn.ghost:hover{background:var(--soft)}
+  .btn.soft{background:var(--soft);color:var(--accent)}.btn.soft:hover{background:var(--soft2)}
+  .btn.sm{padding:6px 12px;font-size:12px;border-radius:8px}
+  .h1{font-family:var(--serif);font-size:34px;font-weight:500;line-height:1.1;letter-spacing:-.01em}
+  .h2{font-family:var(--serif);font-size:24px;font-weight:500;line-height:1.2}
+  .h3{font-size:15px;font-weight:600}
+  .eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .tabs{display:flex;gap:26px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .tab{padding:12px 0;color:var(--muted);font-size:13.5px;position:relative}
+  .tab.active{color:var(--ink);font-weight:500}
+  .tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);border-radius:2px}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+  .page-head p{color:var(--muted);margin-top:6px}
+  .row{display:flex;align-items:center;gap:10px}
+  .between{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .divider{height:1px;background:var(--line);margin:18px 0}
+  .verified{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:var(--accent);color:#fff}
+  .verified svg{width:9px;height:9px;stroke-width:3}
+
+  /* ---------- Home ---------- */
+  .greet{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .stat{padding:18px 20px}
+  .stat .n{font-family:var(--serif);font-size:34px;font-weight:500;line-height:1;margin:10px 0 6px}
+  .stat small{color:var(--muted);font-size:12px}
+  .stat .up{color:#3F7A4A;font-weight:500}
+  .home-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:18px}
+  .event-hero{display:grid;grid-template-columns:1fr 250px;overflow:hidden}
+  .event-hero .img{background:#151413;position:relative;display:grid;place-items:center;min-height:300px}
+  .event-hero .img .words{position:absolute;right:18px;top:18px;text-align:right;font-family:var(--serif);letter-spacing:.3em;font-size:11px;color:#fff;line-height:1.9;text-transform:uppercase}
+  .arch{position:absolute;inset:40px 40px 0 40px;border-radius:120px 120px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.06))}
+  .rsvp-bar{height:34px;border-radius:9px;background:var(--soft);position:relative;overflow:hidden;display:flex;align-items:center;padding:0 12px;font-size:13px;margin-bottom:8px}
+  .rsvp-bar .fill{position:absolute;inset:0 auto 0 0;background:var(--soft2);border-radius:9px}
+  .rsvp-bar.win .fill{background:var(--espresso)}.rsvp-bar.win{color:#fff}
+  .rsvp-bar span{position:relative;flex:1}.rsvp-bar em{position:relative;font-style:normal;font-weight:500;color:var(--ink)}
+  .rsvp-bar.win em{color:var(--ink)}
+  .list-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .list-item:last-child{border-bottom:0}
+  .date-box{width:46px;flex-shrink:0;text-align:center;border:1px solid var(--line);border-radius:10px;padding:5px 0;background:var(--surface)}
+  .date-box b{display:block;font-family:var(--serif);font-size:20px;line-height:1;font-weight:600}
+  .date-box small{font-size:9.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .match{font-size:11px;font-weight:600;color:var(--sageInk);background:var(--sage);border-radius:20px;padding:2px 8px}
+
+  /* ---------- Feed ---------- */
+  .hero{border-radius:var(--r);overflow:hidden;position:relative;height:200px;margin-bottom:6px;background:#151413}
+  .hero .art{position:absolute;inset:0 0 0 38%}
+  .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,#EFE9DD 0%,#EFE9DD 36%,rgba(239,233,221,.0) 62%)}
+  .hero .t,.hero .w{z-index:2}
+  .hero .t{position:absolute;left:38px;top:30px}
+  .hero .t h1{font-family:var(--serif);font-weight:500;font-size:46px;line-height:.98;color:var(--ink)}
+  .hero .t p{font-family:var(--serif);font-size:19px;margin-top:10px;color:var(--ink2)}
+  .hero .w{position:absolute;right:34px;top:50%;transform:translateY(-50%);font-size:10.5px;letter-spacing:.2em;line-height:2;color:#fff;text-transform:uppercase}
+  .post{padding:22px 24px;margin-bottom:16px}
+  .post-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .post-head b{font-weight:500}
+  .post-head small{display:block;color:var(--muted);font-size:12px}
+  .post-body{display:grid;grid-template-columns:1fr 210px;gap:22px}
+  .post-body h3{font-family:var(--serif);font-size:25px;font-weight:500;line-height:1.2;margin-bottom:8px}
+  .post-body p{color:var(--ink2)}
+  .thumb{border-radius:10px;min-height:130px;position:relative;overflow:hidden;display:grid;place-items:center}
+  .meta-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px;align-items:center}
+  .meta{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:7px 12px;background:var(--surface);font-size:12.5px}
+  .meta small{display:block;color:var(--muted);font-size:10.5px;line-height:1.2}
+  .post-foot{display:flex;align-items:center;gap:22px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink2);font-size:13px}
+  .post-foot button{display:flex;align-items:center;gap:7px}
+  .post-foot button:hover{color:var(--ink)}
+  .post-foot .liked{color:var(--burgundy)}.post-foot .liked svg{fill:var(--burgundy)}
+  .post-foot .r{margin-left:auto}
+
+  .creator-row{display:flex;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);margin-bottom:10px;align-items:flex-start}
+  .creator-row .ph{width:62px;height:70px;border-radius:9px;flex-shrink:0}
+  .creator-row b{font-weight:600;font-size:13.5px}
+  .creator-row .loc{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:3px}
+  .creator-row .loc svg{width:12px;height:12px}
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+  .tags .chip{font-size:10.5px;padding:2px 8px}
+  .filter-chips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 16px}
+  .fchip{border:1px solid var(--line);border-radius:9px;padding:6px 12px;font-size:12.5px;background:var(--card);transition:.15s}
+  .fchip:hover{background:var(--soft)}
+  .fchip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* ---------- Poll ---------- */
+  .poll-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 10px}
+  .popt{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);cursor:pointer;transition:.18s;text-align:left}
+  .popt:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .popt .pic{height:128px;display:grid;place-items:center;background:linear-gradient(180deg,#F3EFE8,#E4DCCD)}
+  .popt .lab{display:flex;align-items:center;gap:8px;padding:9px 10px;font-size:12.5px}
+  .radio{width:15px;height:15px;border-radius:50%;border:1.5px solid #9C968C;display:grid;place-items:center;flex-shrink:0}
+  .popt.sel{border-color:var(--accent);box-shadow:0 0 0 2px rgba(91,48,36,.12)}
+  .popt.sel .radio{border-color:var(--accent)}.popt.sel .radio::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .res-row{display:grid;grid-template-columns:18px 100px 1fr 40px 28px;align-items:center;gap:10px;padding:8px 0;font-size:13px}
+  .res-row .sw{width:16px;height:16px;border-radius:50%}
+  .res-row .bar{height:18px;border-radius:4px;background:var(--soft);overflow:hidden}
+  .res-row .bar i{display:block;height:100%;border-radius:4px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .res-row .pc{font-weight:600;text-align:right}.res-row .ct{color:var(--muted);text-align:right}
+  .winner{background:var(--sage);border-radius:12px;padding:16px 18px;display:flex;gap:12px;align-items:center;margin:14px 0}
+  .quote{display:flex;gap:12px;padding:10px 0}
+  .quote .n{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;flex-shrink:0;background:var(--card)}
+  .comment{display:flex;gap:12px;padding:12px 0}
+  .comment b{font-weight:500;font-size:13px}
+  .comment .small{font-size:11.5px;color:var(--muted)}
+  .comment-actions{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:4px}
+  .input-row{display:flex;gap:10px;align-items:center;margin-top:10px}
+  .input{flex:1;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:11px;padding:10px 14px;background:var(--card)}
+  .input input{border:0;outline:0;background:transparent;flex:1;font-size:13px}
+  .send{width:42px;height:42px;border-radius:11px;background:var(--espresso);color:#fff;display:grid;place-items:center;flex-shrink:0}
+  .send:hover{background:var(--accent)}
+  .mini-poll{padding:18px 20px;margin-bottom:14px}
+
+  /* ---------- Chat ---------- */
+  .chat{display:flex;flex-direction:column;flex:1;min-width:0;background:var(--surface)}
+  .chat-head{display:flex;align-items:center;gap:14px;padding:14px 26px;border-bottom:1px solid var(--line);background:var(--card)}
+  .chat-head .t{font-weight:600;font-size:16px;display:flex;align-items:center;gap:6px}
+  .chat-head small{color:var(--muted);font-size:12.5px}
+  .msgs{flex:1;overflow-y:auto;padding:20px 28px}
+  .day{display:flex;justify-content:center;margin:6px 0 16px}
+  .day span{font-size:11.5px;background:var(--soft);padding:3px 12px;border-radius:20px;color:var(--ink2)}
+  .msg{display:flex;gap:13px;padding:8px 10px;border-radius:10px;margin:0 -10px;transition:.1s}
+  .msg:hover{background:rgba(234,226,216,.35)}
+  .msg .name{font-weight:600;font-size:14px}
+  .msg .time{font-size:11px;color:var(--muted);margin-left:8px;font-weight:400}
+  .msg .role{font-size:10.5px;margin-left:6px}
+  .msg p{color:var(--ink2);margin-top:2px}
+  .reacts{display:flex;gap:6px;margin-top:7px}
+  .react{font-size:12px;border:1px solid var(--line);border-radius:20px;padding:2px 9px;background:var(--card)}
+  .react.mine{border-color:#C9C3BA;background:#EEECE7}
+  .thread-link{font-size:12px;color:var(--accent);font-weight:500;margin-top:6px;display:flex;align-items:center;gap:8px}
+  .attach{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--card);margin-top:8px;max-width:360px}
+  .pdf{width:32px;height:38px;border-radius:5px;background:#B8483A;color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center}
+  .intro-card{display:grid;grid-template-columns:130px 1fr;gap:18px;background:var(--soft);border-radius:12px;padding:14px;margin-top:10px;max-width:620px}
+  .intro-card .ph{border-radius:8px;min-height:150px}
+  .composer{margin:0 26px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+  .composer textarea{width:100%;border:0;outline:0;resize:none;background:transparent;padding:14px 16px 4px;font-size:13.5px;height:46px}
+  .composer .tools{display:flex;align-items:center;gap:4px;padding:6px 8px 8px}
+  .composer .tools .icon-btn{width:32px;height:32px;color:var(--muted)}
+  .composer .send{width:36px;height:36px;margin-left:auto;border-radius:9px}
+  /* DM bubbles */
+  .bub-row{display:flex;gap:10px;margin:10px 0;align-items:flex-end}
+  .bub-row.me{flex-direction:row-reverse}
+  .bub{max-width:62%;padding:11px 15px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:var(--ink2)}
+  .bub-row.me .bub{background:#EAE7E1;border-color:#ECE8E1;border-bottom-right-radius:4px}
+  .bub-row:not(.me) .bub{border-bottom-left-radius:4px}
+  .bub .tm{font-size:10.5px;color:var(--muted);display:block;margin-top:5px;text-align:right}
+  .deal{border:1px dashed #C9C3BA;background:#F5F3EF;border-radius:12px;padding:12px 14px;margin-top:8px}
+  .profile-cover{height:130px;border-radius:12px;background:#1C1214;position:relative;margin-bottom:46px}
+  .profile-cover .av{position:absolute;left:18px;bottom:-40px;border:4px solid var(--surface)}
+  .kv{display:flex;gap:10px;align-items:center;padding:6px 0;color:var(--ink2);font-size:13px}
+  .kv svg{color:var(--muted)}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .gallery div{aspect-ratio:1;border-radius:9px}
+  .lock-note{display:flex;gap:10px;background:var(--soft);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--ink2);margin-top:18px}
+
+  /* ---------- Discover ---------- */
+  .disc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+  .dcard{overflow:hidden;transition:.2s}
+  .dcard:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(42,30,25,.1)}
+  .dcard .ph{height:190px;position:relative;display:flex;align-items:flex-end;padding:12px}
+  .dcard .ph .initial{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:64px;color:rgba(255,255,255,.55)}
+  .dcard .ph .match{position:relative;background:rgba(255,255,255,.9)}
+  .dcard .save{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;color:var(--ink)}
+  .dcard .save.on{color:var(--burgundy)}.dcard .save.on svg{fill:var(--burgundy)}
+  .dcard .bd{padding:14px 16px 16px}
+  .dcard .nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:12px 0;padding:9px 0;text-align:center}
+  .dcard .nums b{display:block;font-size:14px;font-weight:600}
+  .dcard .nums small{font-size:10.5px;color:var(--muted)}
+  .why{font-size:12px;color:var(--ink2);background:var(--surface);border-radius:8px;padding:8px 10px;display:flex;gap:7px;margin-top:10px}
+  .why svg{width:14px;height:14px;color:var(--gold);margin-top:2px}
+  .ai-banner{display:flex;gap:18px;align-items:center;padding:20px 24px;margin-bottom:22px;background:linear-gradient(110deg,#F7F3EC,#ECE4D6)}
+  .ai-banner .spark{width:46px;height:46px;border-radius:12px;background:var(--espresso);color:#ECE8E1;display:grid;place-items:center}
+
+  /* ---------- Campaigns ---------- */
+  .kanban{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:16px;overflow-x:auto}
+  .col-h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-bottom:12px;padding:0 4px}
+  .col-h .ct{font-weight:400;color:var(--muted)}
+  .col-h .d{width:8px;height:8px;border-radius:50%}
+  .kcard{padding:16px;margin-bottom:12px}
+  .kcard h4{font-family:var(--serif);font-size:19px;font-weight:500;line-height:1.2;margin:8px 0 6px}
+  .progress{height:5px;background:var(--soft);border-radius:4px;overflow:hidden;margin:12px 0 6px}
+  .progress i{display:block;height:100%;background:var(--accent)}
+
+  /* ---------- Files ---------- */
+  .files{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+  .file{overflow:hidden}
+  .file .pv{height:130px;display:grid;place-items:center}
+  .file .bd{padding:12px 14px}
+  .file b{font-weight:500;font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .file small{color:var(--muted);font-size:11.5px}
+
+  /* ---------- Modal / toast ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(35,22,18,.38);backdrop-filter:blur(3px);display:none;place-items:center;z-index:50}
+  .overlay.open{display:grid}
+  .modal{width:640px;max-width:calc(100vw - 32px);max-height:calc(100vh - 40px);overflow-y:auto;background:var(--card);border-radius:18px;padding:26px 28px;box-shadow:0 30px 80px rgba(35,22,18,.3);animation:pop .22s ease}
+  @keyframes pop{from{transform:translateY(8px) scale(.98);opacity:0}}
+  .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}
+  .seg button{border:1px solid var(--line);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;color:var(--ink2);transition:.15s}
+  .seg button.on{border-color:var(--accent);background:#EEECE7;color:var(--accent);font-weight:500}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:6px}
+  .field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);outline:0;font-size:13.5px}
+  .field input:focus,.field textarea:focus{border-color:#B8AE9C;background:#fff}
+  .field textarea{resize:vertical;min-height:84px}
+  .aud{display:flex;gap:8px;flex-wrap:wrap}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--espresso);color:#F3EEE4;padding:12px 18px;border-radius:12px;font-size:13px;display:flex;gap:10px;align-items:center;opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .notif{position:absolute;top:60px;right:120px;width:360px;z-index:40;display:none;padding:8px 0}
+  .notif.open{display:block;animation:pop .18s ease}
+  .notif .list-item{padding:12px 18px}
+
+  /* ---------- elevX AI ---------- */
+  .ai-head{display:flex;align-items:center;gap:16px;padding:18px 28px;border-bottom:1px solid var(--line);background:var(--card)}
+  .ai-orb{width:48px;height:48px;border-radius:50%;background:var(--espresso);color:#ECE8E1;display:grid;place-items:center;flex-shrink:0;box-shadow:0 0 0 6px var(--soft)}
+  .ai-orb.sm{width:38px;height:38px;box-shadow:none}
+  .ai-modes{display:flex;gap:4px;background:var(--soft);padding:4px;border-radius:11px;margin-left:auto}
+  .ai-modes button{padding:7px 14px;border-radius:8px;font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+  .ai-modes button.on{background:var(--card);color:var(--ink);font-weight:500;box-shadow:0 1px 3px rgba(42,30,25,.08)}
+  .ai-msgs{flex:1;overflow-y:auto;padding:24px 32px}
+  .u-row{display:flex;justify-content:flex-end;gap:12px;margin-bottom:22px}
+  .u-bub{background:var(--soft);border-radius:14px 4px 14px 14px;padding:13px 17px;max-width:520px;color:var(--ink)}
+  .u-bub .tm,.a-row .tm{font-size:11px;color:var(--muted)}
+  .a-row{display:flex;gap:14px;margin-bottom:22px}
+  .a-row .body{flex:1;min-width:0}
+  .a-text{background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:12px 16px;display:inline-block;color:var(--ink2);max-width:640px}
+  .rec-sec{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px 18px;margin-top:14px}
+  .rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  .rec-card{display:flex;gap:16px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--surface)}
+  .rec-card .ph{width:118px;height:150px;border-radius:9px;flex-shrink:0;position:relative;display:grid;place-items:center;font-family:var(--serif);font-size:40px;color:rgba(255,255,255,.55)}
+  .rec-card .ph .match{position:absolute;left:6px;bottom:6px;background:rgba(255,255,255,.92);font-size:10px}
+  .rec-card b{font-size:15px;font-weight:600}
+  .rec-card .kv{padding:3px 0;font-size:12.5px}
+  .rec-card .kv svg{width:14px;height:14px}
+  .add-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;background:var(--card);flex-shrink:0;transition:.15s}
+  .add-btn:hover{background:var(--soft)}
+  .add-btn.on{background:var(--espresso);color:#fff;border-color:var(--espresso)}
+  .brief-item{display:flex;gap:14px;padding:12px 0}
+  .brief-item .ic{width:40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center;flex-shrink:0;color:var(--ink2)}
+  .brief-item b{font-weight:600;font-size:13px;display:block}
+  .brief-item span{color:var(--ink2);font-size:13px}
+  .ins{background:var(--soft);border-radius:12px;padding:14px 16px}
+  .ins div{display:flex;gap:10px;padding:5px 0;font-size:13px;color:var(--ink2)}
+  .ins .ck{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;flex-shrink:0}
+  .ins .ck svg{width:11px;height:11px;stroke-width:3}
+  .trend-card{border:1px solid var(--line);border-radius:14px;background:var(--card);margin-top:14px;overflow:hidden;max-width:820px}
+  .trend-card .th{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+  .trend-card .src{margin-left:auto;font-size:10.5px;color:var(--muted);text-align:right;max-width:240px;line-height:1.4}
+  .trow{display:grid;grid-template-columns:30px 1fr 92px 120px;gap:16px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line)}
+  .trow .num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:12px}
+  .trow h5{font-family:var(--serif);font-size:19px;font-weight:500;line-height:1.2}
+  .trow p{font-size:12.5px;color:var(--muted)}
+  .trow .tx{height:58px;border-radius:7px}
+  .trow .tag{font-family:var(--serif);font-size:14px;color:var(--accent2);line-height:1.25}
+  .opps{margin:14px;border-radius:12px;background:var(--soft);padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+  .opps ul{padding-left:18px;font-size:12.5px;color:var(--ink2)}
+  .opps li{padding:2px 0}
+  .suggest{display:flex;gap:8px;flex-wrap:wrap;padding:0 32px 10px}
+  .suggest button{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:9px;padding:6px 11px;font-size:12px;background:var(--card);color:var(--ink2)}
+  .suggest button:hover{background:var(--soft)}
+  .suggest svg{width:14px;height:14px}
+  .typing{display:inline-flex;gap:4px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px}
+  .typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+  .disclaimer{text-align:center;font-size:11px;color:var(--muted);padding:0 0 12px;margin-top:-10px}
+  .ai-history{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+  .ai-history button{text-align:left;padding:8px 10px;border-radius:8px;font-size:12.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ai-history button:hover{background:var(--soft)}
+
+  /* ---------- elevX additions ---------- */
+  .side-tex{position:absolute;left:0;right:0;bottom:0;height:420px;opacity:.85;pointer-events:none;
+    -webkit-mask-image:linear-gradient(transparent,#000 55%);mask-image:linear-gradient(transparent,#000 55%)}
+  .side::after{display:none}
+  .hero{height:210px}
+  .hero::before{background:linear-gradient(100deg,rgba(236,232,225,.96) 0%,rgba(236,232,225,.88) 34%,rgba(236,232,225,0) 60%)}
+  .hero .art{inset:0}
+  .hero .t h1{font-family:var(--sans);font-weight:400;font-size:40px;line-height:1.02;letter-spacing:-.02em}
+  .hero .t .rule{width:34px;height:1px;background:var(--ink);margin:14px 0 10px}
+  .hero .t small{font-size:10px;letter-spacing:.3em;color:var(--ink2)}
+  .hero .w{color:#F4F1EC;text-align:right}
+  .cap{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:var(--serif);color:#fff;font-size:17px;line-height:1.15;text-align:left;max-width:110px}
+  .cap.dark{color:#151413}
+  .mood{display:grid;grid-template-columns:repeat(4,1fr) 90px;gap:8px;margin-top:14px}
+  .mood div{height:84px;border-radius:8px}
+  .mood .more{background:var(--soft);display:grid;place-items:center;color:var(--ink2);font-size:13px}
+  .ask-ai{display:flex;gap:14px;align-items:center;background:var(--soft);border-radius:14px;padding:18px;margin-top:18px}
+  .ask-ai .go{width:38px;height:38px;border-radius:9px;background:var(--espresso);color:#fff;display:grid;place-items:center;flex-shrink:0}
+  .att-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .att-tile{border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden;font-size:12px}
+  .att-tile .tp{height:58px;position:relative;display:grid;place-items:center}
+  .att-tile .tp .play{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;color:#151413}
+  .att-tile .tp .play svg{width:12px;height:12px;fill:#151413}
+  .att-tile .nm{padding:7px 9px;color:var(--ink)}
+  .att-tile .nm small{display:block;color:var(--muted);font-size:10.5px}
+  .pstats{display:grid;grid-template-columns:repeat(3,1fr);padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .pstats b{font-size:17px;font-weight:600;display:block}
+  .pstats small{color:var(--muted);font-size:11.5px}
+  .steps div{display:flex;gap:10px;align-items:center;padding:5px 0;font-size:13px;color:var(--ink2)}
+  .steps .bx{width:18px;height:18px;border-radius:50%;border:1.5px solid #A8A39C;display:grid;place-items:center;flex-shrink:0;cursor:pointer}
+  .steps .bx.on{background:var(--espresso);border-color:var(--espresso);color:#fff}
+  .steps .bx svg{width:10px;height:10px;stroke-width:3}
+
+  @media (max-width:1280px){.rpanel{width:310px}.poll-opts{grid-template-columns:repeat(3,1fr)}.rec-grid{grid-template-columns:1fr}.trow{grid-template-columns:30px 1fr 80px}.trow .tag{display:none}}
+  @media (max-width:1120px){.rpanel{display:none}.home-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:820px){.app{grid-template-columns:1fr}.side{display:none}.pad{padding:20px 16px}.post-body,.event-hero{grid-template-columns:1fr}.me div{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="side">
+    <div class="side-tex" id="sideTex"></div>
+    <div class="brand" style="display:block;padding:26px 24px 20px">
+      <span id="logo" style="display:none"></span>
+      <div class="wm" style="font-size:44px;letter-spacing:.01em;line-height:1;color:#F4F1EC">elevX</div><div class="tag" style="font-size:10px;letter-spacing:.32em;margin-top:8px">PRIVATE CREATOR NETWORK</div>
+    </div>
+    <div class="side-scroll">
+      <button class="space"><span class="ic" style="font-size:14px">eX</span><span style="flex:1"><b>elevX Network</b><small>Creators · Team · Partners</small></span><span data-i="chev"></span></button>
+      <button class="create-btn" onclick="openModal()"><span data-i="plus"></span>Create</button>
+      <nav id="mainNav"></nav>
+      <div class="sec-h">Community channels <button title="Add channel" onclick="toast('New channel — coming soon')"><span data-i="plus"></span></button></div>
+      <nav id="chanNav"></nav>
+      <div class="sec-h">Internal · team only <span data-i="lock" style="opacity:.6"></span></div>
+      <nav id="intNav"></nav>
+      <div class="sec-h">Direct messages <button title="New message"><span data-i="plus"></span></button></div>
+      <nav id="dmNav"></nav>
+    </div>
+    <div class="side-foot">
+      <div><div class="motto" style="font-size:26px">Made<br>to remain.</div><div style="font-size:9px;letter-spacing:.3em;color:var(--sideMuted);margin-top:10px;line-height:1.9">PEOPLE | IDEAS<br>CONTENT | IMPACT</div></div>
+      <div class="powered" title="Powered by Incluhub"><span id="incluMark"></span></div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <header class="top">
+      <div class="search"><span data-i="search"></span><input placeholder="Search posts, creators, campaigns — or ask elevX AI…" onkeydown="if(event.key==='Enter'&&this.value.trim()){const q=this.value;this.value='';go('ai');aiAsk(q)}" /><span class="kbd">Ctrl K</span></div>
+      <div class="top-right">
+        <button class="icon-btn" title="Calendar"><span data-i="cal"></span></button>
+        <button class="icon-btn" title="Notifications" onclick="document.getElementById('notif').classList.toggle('open')"><span data-i="bell"></span><span class="ping"></span></button>
+        <div class="me"><span class="av" style="width:40px;height:40px;background:#2E2925;font-size:14px">SS</span><div><b>Shiva Singh</b><small>Brand Admin</small></div><span data-i="chev" class="muted"></span></div>
+      </div>
+      <div class="card notif" id="notif"></div>
+    </header>
+
+    <section class="view" id="v-home"></section>
+    <section class="view" id="v-announcements"></section>
+    <section class="view" id="v-polls"></section>
+    <section class="view" id="v-campaigns"></section>
+    <section class="view" id="v-discover"></section>
+    <section class="view" id="v-chat"></section>
+    <section class="view" id="v-files"></section>
+    <section class="view" id="v-ai"></section>
+  </main>
+</div>
+
+<!-- ================= CREATE MODAL ================= -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="between"><div><div class="eyebrow">elevX Network</div><div class="h2" style="margin-top:4px">Create something new</div></div><button class="icon-btn" onclick="closeModal()"><span data-i="x"></span></button></div>
+    <div class="seg" id="seg"></div>
+    <div id="modalBody"></div>
+    <div class="between" style="margin-top:8px">
+      <label class="row muted" style="font-size:12.5px"><input type="checkbox" checked> Notify members</label>
+      <div class="row"><button class="btn ghost" onclick="closeModal()">Save draft</button><button class="btn primary" onclick="closeModal();toast('Published to elevX Network')">Publish <span data-i="arrow"></span></button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"><span data-i="check"></span><span id="toastText"></span></div>
+
+<script>
+/* ============================================================
+   ICONS
+   ============================================================ */
+const P = {
+  home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  mega:'<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',
+  poll:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  brief:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6 6 0 0 1 3.5 6"/>',
+  folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  heart:'<path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+  comment:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  share:'<path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14"/>',
+  bookmark:'<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+  send:'<path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/>',
+  clip:'<path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7"/>',
+  smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14a4 4 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+  pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  spark:'<path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  back:'<path d="M19 12H5M11 18l-6-6 6-6"/>',
+  more:'<circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/>',
+  moreh:'<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  video:'<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3v10l-6-3"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+  filter:'<path d="M4 6h16M7 12h10M10 18h4"/>',
+  chev:'<path d="m6 9 6 6 6-6"/>',
+  image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',
+  star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+  camera:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  award:'<circle cx="12" cy="8" r="6"/><path d="M8.2 13.9 7 23l5-3 5 3-1.2-9.1"/>',
+  event:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>',
+  thread:'<path d="M4 4v10a4 4 0 0 0 4 4h12M16 14l4 4-4 4"/>',
+  hash:'<path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/>',
+};
+const I = (n, cls='') => `<svg class="i ${cls}" viewBox="0 0 24 24">${P[n]||''}</svg>`;
+const fillIcons = (root=document) => root.querySelectorAll('[data-i]').forEach(el => { el.outerHTML = I(el.dataset.i); });
+
+/* Placeholder brand mark — swap for the brand's own logo */
+const logo = (c='#ECE8E1', s=40) => `<svg width="${s*1.25}" height="${s}" viewBox="0 0 60 48">
+  <text x="30" y="31" text-anchor="middle" fill="${c}" font-family="Cormorant Garamond, Georgia, serif" font-size="19">elevX</text></svg>`;
+document.getElementById('logo').innerHTML = logo();
+document.getElementById('sideTex').style.background = art('knit');
+document.getElementById('incluMark').innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="#ECE8E1"><circle cx="2" cy="2" r="1.6"/><circle cx="7" cy="2" r="1.6"/><circle cx="7" cy="7" r="1.6"/><circle cx="12" cy="7" r="1.6"/><circle cx="2" cy="12" r="1.6"/><circle cx="7" cy="12" r="1.6"/></svg> Incluhub`;
+
+/* ============================================================
+   VISUAL HELPERS (no external images — all generated)
+   ============================================================ */
+const TONES = ['#3A3633','#6B645C','#7C7770','#2F2C2A','#5A5149','#4A4744','#8A7F72','#57504A','#6B6B64','#262423'];
+const tone = s => TONES[[...s].reduce((a,c)=>a+c.charCodeAt(0),0) % TONES.length];
+const initials = n => n.split(' ').map(w=>w[0]).slice(0,2).join('');
+const av = (name, size=40, extra='') => `<span class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.36)}px;background:linear-gradient(145deg,${tone(name)},${shade(tone(name))});${extra}">${initials(name)}</span>`;
+function shade(hex){ const n=parseInt(hex.slice(1),16); const f=v=>Math.max(0,Math.round(v*.62)); return `rgb(${f(n>>16)},${f(n>>8&255)},${f(n&255)})`; }
+const portrait = (name) => `background:linear-gradient(160deg,${tone(name)} 0%,${shade(tone(name))} 100%);`;
+/* Draped fabric swatch on a brass rod — a neutral "product" that suits any luxury brand */
+let _sw = 0;
+const bag = (c, w=96) => { const id = 'sw'+(_sw++); return `<svg width="${w}" height="${w*.9}" viewBox="0 0 100 90">
+  <defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset=".18" stop-color="#fff" stop-opacity=".16"/><stop offset=".36" stop-color="#000" stop-opacity=".18"/><stop offset=".55" stop-color="#fff" stop-opacity=".12"/><stop offset=".75" stop-color="#000" stop-opacity=".2"/><stop offset=".9" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></linearGradient></defs>
+  <ellipse cx="50" cy="86" rx="32" ry="2.6" fill="#000" opacity=".08"/>
+  <path d="M24 12h52v60q-6.5 9-13 0q-6.5 9-13 0q-6.5 9-13 0q-6.5 9-13 0z" fill="${c}"/>
+  <path d="M24 12h52v60q-6.5 9-13 0q-6.5 9-13 0q-6.5 9-13 0q-6.5 9-13 0z" fill="url(#${id})"/>
+  <rect x="17" y="7" width="66" height="6" rx="3" fill="#A88B6A"/><rect x="17" y="7" width="66" height="2.2" rx="1.1" fill="#fff" opacity=".3"/>
+  <circle cx="17" cy="10" r="4" fill="#8E7254"/><circle cx="83" cy="10" r="4" fill="#8E7254"/></svg>`; };
+
+/* Default luxury artwork (SVG, no external images): arch · deco · marble · velvet · silk */
+function art(kind){
+  let s = '';
+  if(kind==='arch'){
+    let arches=''; for(let i=0;i<4;i++){ const x=28+i*90; arches += `<path d="M${x} 260V118a36 36 0 0 1 72 0V260z" fill="url(#l)" opacity="${i===1||i===2?.75:.45}"/><path d="M${x} 260V118a36 36 0 0 1 72 0V260" fill="none" stroke="#A88B6A" stroke-opacity=".55" stroke-width="1.2"/>`; }
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x2="0" y2="1"><stop stop-color="#2A1619"/><stop offset="1" stop-color="#151413"/></linearGradient><radialGradient id="l" cx=".5" cy=".3" r=".8"><stop stop-color="#ECE8E1"/><stop offset=".55" stop-color="#8A7F72" stop-opacity=".55"/><stop offset="1" stop-color="#2E2925" stop-opacity="0"/></radialGradient></defs><rect width="400" height="250" fill="url(#g)"/>${arches}<rect y="222" width="400" height="28" fill="#000" opacity=".3"/><path d="M0 222h400" stroke="#A88B6A" stroke-opacity=".4"/></svg>`;
+  } else if(kind==='deco'){
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse">${[[0,0],[40,0],[20,20],[0,40],[40,40]].map(([x,y])=>[19,13,7].map(r=>`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#A88B6A" stroke-opacity=".55" stroke-width=".7"/>`).join('')).join('')}</pattern><radialGradient id="v" cx=".5" cy=".5" r=".75"><stop stop-color="#151413" stop-opacity="0"/><stop offset="1" stop-color="#151413" stop-opacity=".85"/></radialGradient></defs><rect width="400" height="250" fill="#1C1214"/><rect width="400" height="250" fill="url(#p)"/><rect width="400" height="250" fill="url(#v)"/></svg>`;
+  } else if(kind==='marble'){
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="m" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F3EEE6"/><stop offset=".5" stop-color="#E4DCCD"/><stop offset="1" stop-color="#D3C8B5"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation=".7"/></filter></defs><rect width="400" height="250" fill="url(#m)"/><g fill="none" filter="url(#b)"><path d="M-10 70C70 40 120 130 210 95S350 20 410 60" stroke="#9C8F7C" stroke-opacity=".5" stroke-width="1.4"/><path d="M-10 170C60 150 140 210 230 165S330 120 410 150" stroke="#8A7F72" stroke-opacity=".35" stroke-width="2"/><path d="M60 -10C90 60 70 130 130 260" stroke="#A89C88" stroke-opacity=".4"/><path d="M280 -10C250 80 330 140 300 260" stroke="#9C8F7C" stroke-opacity=".3" stroke-width="1.2"/><path d="M150 100C200 120 230 90 290 120" stroke="#7C7C75" stroke-opacity=".3" stroke-width=".8"/></g></svg>`;
+  } else if(kind==='velvet'){
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="f" x2=".11" spreadMethod="reflect"><stop stop-color="#3A1419"/><stop offset=".5" stop-color="#6E2A35"/><stop offset="1" stop-color="#2E2925"/></linearGradient><linearGradient id="s" x2="0" y2="1"><stop stop-color="#000" stop-opacity=".45"/><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient></defs><rect width="400" height="250" fill="url(#f)"/><rect width="400" height="250" fill="url(#s)"/><path d="M0 30h400" stroke="#A88B6A" stroke-width="3" opacity=".7"/></svg>`;
+  } else if(kind==='linen'){ /* soft folded cotton with a woven elevX label */
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#D9D4CB"/><stop offset=".5" stop-color="#C7C0B5"/><stop offset="1" stop-color="#A9A196"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation="9"/></filter><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.4 .25" numOctaves="2"/><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .28  0 0 0 0 .25  0 0 0 .22 0"/></filter></defs><rect width="600" height="260" fill="url(#a)"/><g filter="url(#b)" fill="none"><path d="M200 -20C260 80 300 120 420 140S560 230 640 210" stroke="#EFEBE4" stroke-width="40" opacity=".7"/><path d="M160 40C240 150 330 190 470 210S580 280 620 300" stroke="#8E867A" stroke-width="34" opacity=".45"/><path d="M300 -30C360 40 430 60 520 50S600 20 640 30" stroke="#F3F0EA" stroke-width="28" opacity=".55"/></g><rect width="600" height="260" filter="url(#n)"/><g transform="translate(420 70) rotate(-28)"><rect x="-70" y="-24" width="140" height="48" rx="3" fill="#E9E4DA"/><rect x="-70" y="-24" width="140" height="48" rx="3" fill="none" stroke="#B5ADA1" stroke-dasharray="3 3"/><text x="0" y="10" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#2E2925">elevX</text></g></svg>`;
+  } else if(kind==='knit'){ /* dark draped knit for the sidebar */
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice"><defs><filter id="b"><feGaussianBlur stdDeviation="10"/></filter><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9 .5" numOctaves="2"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .08 0"/></filter></defs><rect width="300" height="420" fill="#151413"/><g filter="url(#b)" fill="none"><path d="M-40 260C60 200 140 330 340 240" stroke="#3B3835" stroke-width="40"/><path d="M-40 340C80 290 170 400 340 330" stroke="#4A4643" stroke-width="30"/><path d="M-40 420C90 360 180 450 340 400" stroke="#33302E" stroke-width="36"/><path d="M60 180C120 230 200 220 340 170" stroke="#2A2826" stroke-width="22"/></g><rect width="300" height="420" filter="url(#n)"/></svg>`;
+  } else if(kind==='coast'){ /* misty sea cliff */
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk" x2="0" y2="1"><stop stop-color="#C9C9C6"/><stop offset="1" stop-color="#9FA2A2"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation="1.2"/></filter></defs><rect width="400" height="250" fill="url(#sk)"/><path d="M0 175h400v75H0z" fill="#7E8486"/><path d="M0 175h400" stroke="#C7CACA" stroke-opacity=".6"/><g filter="url(#b)"><path d="M0 120L60 128 110 150 170 170 215 205 240 250H0z" fill="#57524C"/><path d="M0 140L70 150 140 182 185 215 200 250H0z" fill="#3E3A36"/><path d="M30 160l60 12 50 30" stroke="#8C857C" stroke-width="2" fill="none" opacity=".6"/></g></svg>`;
+  } else if(kind==='tee'){ /* model in a relaxed tee, on stone backdrop */
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="bg" cx=".75" cy=".4" r=".9"><stop stop-color="#8E8983"/><stop offset="1" stop-color="#3C3936"/></radialGradient><linearGradient id="t" x1="0" x2="1"><stop stop-color="#BFB8AD"/><stop offset=".55" stop-color="#E2DCD2"/><stop offset="1" stop-color="#A49C90"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation="1"/></filter></defs><rect width="400" height="250" fill="url(#bg)"/><g filter="url(#b)"><path d="M70 250C72 190 90 150 130 132L165 120C175 140 205 142 215 120L250 132C290 150 300 190 304 250z" fill="url(#t)"/><path d="M165 120C175 140 205 142 215 120" stroke="#9A9288" stroke-width="3" fill="none"/><path d="M176 122C178 80 179 30 178 -5H202C201 30 202 80 204 122z" fill="#8A6E5C"/><path d="M178 -5H202V40C196 46 184 46 178 40z" fill="#000" opacity=".12"/><path d="M120 170C135 200 140 230 138 250M262 170C248 200 244 230 246 250" stroke="#9A9288" stroke-width="2" fill="none" opacity=".6"/></g></svg>`;
+  } else if(kind==='rack'){ /* folded garments in neutrals */
+    const cols=['#D8D2C8','#BDB5A8','#8E867A','#E6E1D8','#5E5852']; let g=''; cols.forEach((c,i)=>{ g+=`<rect x="${40+i*66}" y="70" width="58" height="150" rx="10" fill="${c}"/><path d="M${44+i*66} 90h50" stroke="#000" stroke-opacity=".08" stroke-width="6"/>`; });
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><rect width="400" height="250" fill="#EDEAE4"/><path d="M20 62h360" stroke="#6B655F" stroke-width="4"/>${g}</svg>`;
+  } else { /* silk */
+    s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="k" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5E3F31"/><stop offset=".45" stop-color="#8A7F72"/><stop offset="1" stop-color="#3E2A22"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation="14"/></filter></defs><rect width="400" height="250" fill="url(#k)"/><g filter="url(#b)"><path d="M-40 200C80 120 160 220 260 120S380 40 440 60" stroke="#ECE8E1" stroke-opacity=".45" stroke-width="26" fill="none"/><path d="M-40 90C60 30 150 110 240 50" stroke="#151413" stroke-opacity=".35" stroke-width="30" fill="none"/></g></svg>`;
+  }
+  return `url('data:image/svg+xml;utf8,${encodeURIComponent(s)}') center/cover no-repeat`;
+}
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const nav = [
+  {id:'home', ic:'home', label:'Home'},
+  {id:'ai', ic:'spark', label:'Insights (elevX AI)', badge:'AI'},
+  {id:'announcements', ic:'mega', label:'Announcements', dot:true},
+  {id:'campaigns', ic:'brief', label:'Campaigns'},
+  {id:'polls', ic:'poll', label:'Polls & Feedback'},
+  {id:'discover', ic:'compass', label:'Creator Discovery', badge:'New'},
+  {id:'files', ic:'folder', label:'Content & Brand Assets'},
+];
+const channels = [
+  {id:'general', name:'brand-updates', desc:'Official news from elevX', members:312, unread:true},
+  {id:'opportunities', name:'upcoming-campaigns', desc:'Paid briefs & casting calls', members:312},
+  {id:'product-feedback', name:'product-launches', desc:'First looks at new drops — tell us what you think', members:204, unread:true},
+  {id:'soft-launch', name:'event-collaborations', desc:'Pop-ups, store events & meetups', members:118},
+];
+const internal = [
+  {id:'team', name:'internal-team', desc:'elevX core team', members:11, unread:true},
+  {id:'creative', name:'content-studio', desc:'Design, styling & content production', members:7},
+];
+const people = {
+  'Rohan Mehta':{role:'Videographer', city:'Hyderabad', online:true, tags:['Video','Brand Films','Commercial','Lifestyle','Fashion'], exp:'5+', projects:'120+', gear:'Sony FX3, DJI RS3', lang:'English, Hindi', bio:'Videographer and editor specialising in fashion, lifestyle and brand storytelling. Passionate about creating cinematic visuals that connect with people.', discussion:['Everyday Movement Campaign','Negotiating final quote and confirming dates.']},
+  'Aisha Khan':{role:'Fashion Photographer', city:'Hyderabad', tags:['Fashion','Lifestyle','Editorial']},
+  'Meera Sharma':{role:'Model', city:'Bangalore', tags:['Fashion','E-commerce','Lifestyle']},
+  'Arjun Rao':{role:'Stylist', city:'Hyderabad', tags:['Menswear','Creative Direction']},
+  'Diya Nair':{role:'UGC Creator', city:'Chennai', tags:['Lifestyle','Travel','Fashion']},
+};
+const dms = ['Rohan Mehta','Aisha Khan','Meera Sharma','Arjun Rao','Diya Nair'];
+
+const creators = [
+  {n:'Aisha Khan', r:'Fashion Photographer', c:'Hyderabad', t:['Fashion','Lifestyle','Editorial'], m:96, f:'52K', er:'5.6%', rate:'₹90K', why:'Natural-light, muted-tone work that matches elevX’s calm, everyday aesthetic.'},
+  {n:'Rohan Mehta', r:'Videographer', c:'Hyderabad', t:['Fashion','Brand Films','Commercial'], m:95, f:'38K', er:'6.2%', rate:'₹1.5L', why:'Cinematic real-life storytelling — ideal for the “Everyday Movement” film.'},
+  {n:'Meera Sharma', r:'Model', c:'Bangalore', t:['Fashion','E-commerce','Lifestyle'], m:92, f:'84K', er:'4.8%', rate:'₹60K', why:'Strong e-commerce + lifestyle portfolio; relaxed, unposed movement on camera.'},
+  {n:'Arjun Rao', r:'Stylist', c:'Hyderabad', t:['Fashion','Menswear','Creative Direction'], m:90, f:'21K', er:'7.0%', rate:'₹55K', why:'Minimal menswear layering — perfect for the work-to-weekend capsule.'},
+  {n:'Diya Nair', r:'UGC Creator', c:'Chennai', t:['Lifestyle','Travel','Fashion'], m:89, f:'67K', er:'9.1%', rate:'₹35K', why:'High save rate on “outfit of the week” and travel-packing reels.'},
+  {n:'Kabir Ahuja', r:'Influencer', c:'Mumbai', t:['Streetwear','Fitness'], m:86, f:'140K', er:'5.3%', rate:'₹80K', why:'Audience 72% men 21–30 in metro cities — core elevX buyer.'},
+  {n:'Naina Reddy', r:'MUA', c:'Hyderabad', t:['Natural glam','Editorial'], m:84, f:'27K', er:'5.1%', rate:'₹30K', why:'Clean, no-makeup looks that suit the brand’s honest visual language.'},
+  {n:'Sana Qureshi', r:'Photographer', c:'Pune', t:['Still life','Product'], m:82, f:'15K', er:'6.7%', rate:'₹50K', why:'Fabric and flat-lay still life with soft shadow — great for product pages.'},
+];
+
+const chats = {
+  general: [
+    {day:'Today'},
+    {n:'elevX', brand:true, t:'9:30 AM', txt:'Good morning, creators 👋 The <b>Everyday Movement</b> brief is live — real people, real moments: work, travel, downtime. Responses close on <b>20 October</b>.', re:[['🤍',38],['🔥',14]]},
+    {n:'Aisha Khan', role:'Photographer', t:'9:42 AM', txt:'Love the direction. Are we shooting in natural light only, or is studio okay for the product details?', re:[['👀',4]], replies:3},
+    {n:'Diya Nair', role:'UGC Creator', t:'9:51 AM', txt:'The “Work | Travel | Everyday” moodboard is so good. That linen texture shot 😍', re:[['🤍',9]]},
+    {n:'Shiva Singh', me:true, role:'Brand', t:'10:04 AM', txt:'@Aisha natural light is preferred — studio is fine for close-ups of fabric and stitching. Full brief is in #upcoming-campaigns.', re:[['🙏',6]]},
+    {n:'Arjun Rao', role:'Stylist', t:'10:12 AM', txt:'Perfect. I’ll put together a few work-to-weekend layering options.'},
+  ],
+  opportunities: [
+    {day:'18 Sep 2026'},
+    {n:'elevX', brand:true, t:'11:00 AM', txt:'<b>Creator Campaign — Everyday Movement.</b><br>Looking for UGC creators & photographers to capture real people in real moments. Oct 5 – Nov 5, Pan India.', file:['Brief.pdf','2.4 MB'], re:[['🤍',86],['🙋',24]], replies:24},
+    {day:'Today'},
+    {n:'elevX', brand:true, t:'8:15 AM', txt:'<b>New:</b> 3 creators needed for the “One Tee, Seven Days” styling series. Paid + product. Tap “I’m interested” in Announcements.', re:[['🔥',21]]},
+  ],
+  'product-feedback': [
+    {day:'Yesterday'},
+    {n:'elevX', brand:true, t:'4:20 PM', txt:'First look: the Everyday Overshirt in two fabrics — brushed cotton vs washed linen. Which would you wear more?', re:[['1️⃣',63],['2️⃣',48]]},
+    {n:'Meera Sharma', role:'Model', t:'4:31 PM', txt:'Washed linen, no question. It moves so well on camera.'},
+    {n:'Diya Nair', role:'UGC Creator', t:'4:48 PM', txt:'Brushed cotton for winter travel though — my audience in the north will love it.', re:[['💯',8]]},
+  ],
+  'soft-launch': [
+    {day:'Today'},
+    {n:'elevX', brand:true, t:'10:00 AM', txt:'The elevX Studio Pop-up is happening on <b>24 Oct</b> in Hyderabad 🖤 92 creators have RSVP’d so far.', re:[['🖤',61]]},
+    {n:'Rohan Mehta', role:'Videographer', t:'10:22 AM', txt:'Happy to shoot a short recap film of the day if the team wants it.', replies:4},
+  ],
+  team: [
+    {day:'20 Sep 2026'},
+    {n:'Karthik Varma', role:'Founder', t:'10:00 AM', txt:'Hi team, excited to introduce our Brand Admin who’ll lead creator collaborations and community on elevX Network.', intro:true, re:[['❤️',12],['👍',6]], replies:5},
+    {n:'Shiva Singh', me:true, role:'Brand', t:'10:05 AM', txt:'Thanks, Karthik! I’ll share the Everyday Movement creator plan and our first shortlist by EOD.', re:[['❤️',8],['🎉',5]]},
+    {day:'Today'},
+    {n:'Nisha Gupta', role:'Design', t:'9:12 AM', txt:'Colour poll is in — Stone Grey leads with 34%. Locking it as the hero colourway for the overshirt. Off-White as secondary?', re:[['👍',4]]},
+    {n:'Vikram Shah', role:'Content', t:'9:20 AM', txt:'Agreed. Incluhub surfaced 8 new matches for Everyday Movement — Rohan’s film work is a great fit.', re:[['👀',3]]},
+  ],
+  creative: [
+    {day:'Today'},
+    {n:'Tanya Desai', role:'Art Direction', t:'11:02 AM', txt:'Uploaded v2 of the campaign key visual. More fabric, less product — feels more honest.', file:['Everyday_Movement_KV_v2.pdf','6.2 MB']},
+    {n:'Siddharth Rao', role:'Design', t:'11:15 AM', txt:'Love it. Let’s lock it for the launch on Monday 🚀'},
+  ],
+};
+
+const dmThreads = {
+  'Rohan Mehta': [
+    {day:'18 Sep 2026'},
+    {me:true, t:'10:12 AM', txt:'Hi Rohan,<br>We came across your portfolio on elevX and really liked your work. We’re planning a campaign for our upcoming “Everyday Movement” collection and would like to collaborate with you for the video production.<br><br>Sharing the brief, moodboard and reference video for your review.', atts:true},
+    {t:'10:25 AM', txt:'Thank you for considering my work. The brief looks exciting! Could you please share the expected deliverables, shoot dates and budget range for this project?'},
+    {me:true, t:'10:32 AM', txt:'We’re looking for:<br>• 1 campaign film (60–90 sec)<br>• 3 edited short vertical reels (15–30 sec each)<br>• BTS content (1–2 mins)<br><br>Tentative shoot dates: 12–14 Oct (Hyderabad). Please share your quote for the above deliverables.'},
+    {t:'10:45 AM', txt:'My quote for the complete package (shoot + editing + colour grading) is ₹1,80,000. This includes 1 main film, 3 reels and a BTS edit.'},
+    {me:true, t:'10:52 AM', txt:'Thanks for the quick response. Would you be open to ₹1,50,000? We can confirm the dates this week and share a formal agreement.', deal:true},
+    {t:'10:58 AM', txt:'That works for me. ₹1,50,000 is good. Please go ahead with the agreement — looking forward to collaborating with elevX!'},
+  ],
+};
+const fallbackDM = n => [{day:'This week'},{me:true,t:'3:10 PM',txt:`Hi ${n.split(' ')[0]}, thank you for joining elevX Network! We’d love to learn more about your recent work.`},{t:'3:24 PM',txt:'Thank you for having me! Sharing my latest portfolio link shortly ✨'}];
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+let current = {view:'home', key:null};
+function renderNav(){
+  const item = (id, inner, extra='') => `<button class="nav-item ${isActive(id)?'active':''} ${extra}" onclick="${id}">${inner}</button>`;
+  document.getElementById('mainNav').innerHTML = nav.map(n =>
+    `<button class="nav-item ${current.view===n.id?'active':''}" onclick="go('${n.id}')">${I(n.ic)}${n.label}${n.badge?`<span class="badge">${n.badge}</span>`:''}${n.dot?'<span class="dot"></span>':''}</button>`).join('');
+  document.getElementById('chanNav').innerHTML = channels.map(c =>
+    `<button class="nav-item ${current.key===c.id?'active':''} ${c.unread?'unread':''}" onclick="go('chat','${c.id}')"><span class="hash">#</span>${c.name}</button>`).join('');
+  document.getElementById('intNav').innerHTML = internal.map(c =>
+    `<button class="nav-item ${current.key===c.id?'active':''} ${c.unread?'unread':''}" onclick="go('chat','${c.id}')">${I('lock')}${c.name}${c.unread?'<span class="badge">2</span>':''}</button>`).join('');
+  document.getElementById('dmNav').innerHTML = dms.map((n,i) =>
+    `<button class="nav-item ${current.key==='dm:'+n?'active':''}" onclick="go('chat','dm:${n}')"><span class="dm-av">${av(n,24)}${people[n].online?'<span class="on"></span>':''}</span>${n}${i===1?'<span class="badge">1</span>':''}</button>`).join('');
+}
+function isActive(){return false}
+function go(view, key=null){
+  current = {view, key};
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const el = document.getElementById('v-'+view);
+  el.classList.add('active');
+  const r = renderers[view]; el.innerHTML = r(key); fillIcons(el);
+  renderNav();
+  if(view==='chat'){ const m=el.querySelector('.msgs'); if(m) m.scrollTop=m.scrollHeight; }
+  if(view==='polls') setTimeout(()=>el.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.w),40);
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const renderers = {};
+
+/* ---------- HOME ---------- */
+renderers.home = () => `
+<div class="scroll"><div class="pad">
+  <div class="greet">
+    <div><div class="eyebrow">Monday, 12 October 2026</div><div class="h1" style="margin-top:8px">Good morning, Shiva.</div><p class="muted" style="margin-top:6px">Here’s what’s happening across elevX Network today.</p></div>
+    <div class="row"><button class="btn ghost" onclick="go('discover')">${I('compass')}Discover talent</button><button class="btn primary" onclick="openModal()">${I('plus')}New post</button></div>
+  </div>
+  <div class="stats">
+    ${[['Creators in network','312','+18 this week'],['Open campaigns','4','24 new responses'],['Poll participation','158','+22% vs last poll'],['Active collaborations','11','2 agreements pending']].map(([a,b,c])=>`
+      <div class="card stat"><div class="eyebrow">${a}</div><div class="n">${b}</div><small><span class="up">${c.split(' ')[0]}</span> ${c.split(' ').slice(1).join(' ')}</small></div>`).join('')}
+  </div>
+  <div class="home-grid">
+    <div>
+      <div class="card event-hero">
+        <div style="padding:24px 26px">
+          <div class="row" style="margin-bottom:14px">${I('pin')}<span class="eyebrow">Pinned · Event</span></div>
+          <div class="h1" style="font-size:38px;font-family:var(--sans);font-weight:400;letter-spacing:-.02em">Come as you are.</div>
+          <div style="letter-spacing:.32em;font-size:12px;margin:8px 0 14px">ELEVX STUDIO POP-UP</div>
+          <div class="row muted" style="font-size:13px;gap:16px;margin-bottom:18px"><span class="row" style="gap:6px">${I('cal')}Sat, 24 Oct</span><span class="row" style="gap:6px">${I('pin')}elevX Studio, Hyderabad</span></div>
+          <div class="rsvp-bar win"><div class="fill" style="width:68%"></div><span>${I('check')} Yes, I’ll be there</span><em>68% · 92</em></div>
+          <div class="rsvp-bar"><div class="fill" style="width:21%"></div><span>Maybe, share details</span><em>21% · 28</em></div>
+          <div class="rsvp-bar"><div class="fill" style="width:11%"></div><span>Not this time</span><em>11% · 15</em></div>
+          <div class="between" style="margin-top:14px"><div class="row"><div class="stack">${['Aisha Khan','Rohan Mehta','Meera Sharma','Arjun Rao','Diya Nair'].map(n=>av(n,26)).join('')}</div><small class="muted">+87 attending</small></div><button class="btn sm soft" onclick="go('chat','soft-launch')">Open channel ${I('arrow')}</button></div>
+        </div>
+        <div class="img" style="background:${art('tee')}"><div class="words">Conscious<br>Design<br>Everyday<br>Wear</div></div>
+      </div>
+
+      <div class="card" style="padding:20px 22px;margin-top:18px">
+        <div class="between"><div class="h3">Recent activity</div><button class="muted" style="font-size:12.5px">View all</button></div>
+        ${[
+          ['Rohan Mehta','accepted ₹1,50,000 for the <b>Everyday Movement</b> film','12 min ago','chat','dm:Rohan Mehta'],
+          ['Nisha Gupta','closed the poll <b>“Overshirt colourway”</b> — Stone Grey wins','1 h ago','polls'],
+          ['Aisha Khan','sent you a message about natural-light shoots','2 h ago','chat','dm:Aisha Khan'],
+          ['Kabir Ahuja','joined elevX Network via Incluhub invite','Yesterday','discover'],
+          ['Diya Nair','responded to <b>Everyday Movement</b> campaign','Yesterday','announcements'],
+        ].map(([n,t,w,v,k])=>`<div class="list-item" style="cursor:pointer" onclick="go('${v}'${k?`,'${k}'`:''})">${av(n,36)}<div style="flex:1"><div><b style="font-weight:500">${n}</b> <span class="muted">${t}</span></div><small class="muted">${w}</small></div></div>`).join('')}
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="padding:20px 22px">
+        <div class="between"><div><div class="h3">Incluhub picks for you</div><small class="muted">For: Everyday Movement</small></div>${I('spark')}</div>
+        ${creators.slice(1,4).map(c=>`<div class="list-item" style="align-items:center">${av(c.n,42)}<div style="flex:1"><b style="font-weight:500">${c.n}</b><div class="muted" style="font-size:12px">${c.r} · ${c.c}</div></div><span class="match">${c.m}% match</span></div>`).join('')}
+        <button class="btn soft" style="width:100%;justify-content:center;margin-top:8px" onclick="go('discover')">See all 8 suggestions</button>
+      </div>
+
+      <div class="card" style="padding:20px 22px;margin-top:18px">
+        <div class="h3" style="margin-bottom:4px">Coming up</div>
+        ${[['12','Oct','Everyday Movement shoot — Day 1','Rohan Mehta · Hyderabad'],['20','Oct','Campaign responses close','24 responses so far'],['24','Oct','elevX Studio Pop-up','11 AM · elevX Studio'],['05','Nov','Everyday Movement goes live','Instagram · 12 creators']].map(([d,m,t,s])=>`
+          <div class="list-item" style="align-items:center"><div class="date-box"><b>${d}</b><small>${m}</small></div><div><b style="font-weight:500">${t}</b><div class="muted" style="font-size:12px">${s}</div></div></div>`).join('')}
+      </div>
+
+      <div class="card" style="padding:20px 22px;margin-top:18px;background:var(--sage);border-color:#ECE8E1">
+        <div class="row" style="color:var(--sageInk)">${I('spark')}<b style="font-weight:600;font-size:13px">elevX AI · Weekly insight</b></div>
+        <p style="margin-top:8px;color:var(--ink2);font-size:13px">Real-life, unposed content gets <b>2.1×</b> more saves than studio shots for elevX. Consider leading Everyday Movement with “day-in-the-life” reels.</p>
+        <button class="btn sm" style="margin-top:12px;background:#fff;color:var(--sageInk)" onclick="aiMode='trends';go('ai')">Ask elevX AI ${I('arrow')}</button>
+      </div>
+    </div>
+  </div>
+</div></div>`;
+
+/* ---------- ANNOUNCEMENTS ---------- */
+let liked = {};
+const posts = [
+  {id:'p1', type:'Campaign', date:'18 Sep 2026', title:'Creator Campaign: Everyday Movement', body:'We are creating a content series that captures real people in real moments — work, travel, downtime. We’re looking for creators who can bring the feeling of everyday movement to life through photo and short video content.', img:art('tee'), cap:'Same<br>Fabric.<br>New<br>Possibilities.', chips:[['pin','Pan India','Location'],['cal','Oct 5 – Nov 5, 2026','Timeline'],['users','UGC Creators, Photographers','Looking for'],['file','Brief.pdf','View brief']], likes:86, resp:24, cta:true},
+  {id:'p2', type:'Inspiration', date:'12 Sep 2026', title:'Moodboard: Work | Travel | Everyday', body:'A visual reference board for upcoming campaigns. Explore the aesthetic, locations and mood. This will help you understand the brand direction.', mood:['linen','tee','rack','coast'], likes:104, resp:12},
+  {id:'p3', type:'Event', date:'08 Sep 2026', title:'Come as you are — elevX Studio Pop-up', body:'Join us for a relaxed day at the elevX Studio: try the new Everyday collection, meet the team and other creators, and shoot content in our natural-light set.', img:art('rack'), likes:132, resp:31, rsvp:true},
+  {id:'p4', type:'Announcement', date:'05 Sep 2026', title:'Building a More Conscious Tomorrow', body:'At elevX, we believe in thoughtful design, responsible choices and a more meaningful future. Stay tuned for new initiatives and collaborations.', img:art('coast'), cap:'Thoughtful<br>today.<br>Brighter<br>tomorrow.', capDark:true, likes:142, resp:27},
+];
+renderers.announcements = () => `
+<div class="scroll"><div class="pad">
+  <div class="hero"><div class="art" style="background:${art('linen')}"></div><div class="t"><h1>Better<br>Clothes<br>For A Fuller Life.</h1><div class="rule"></div><small>PEOPLE &nbsp;|&nbsp; IDEAS &nbsp;|&nbsp; CONTENT &nbsp;|&nbsp; IMPACT</small></div><div class="w">Conscious<br>Design<br>Everyday wear<br>A brighter tomorrow</div></div>
+  <div class="between"><div class="tabs" style="flex:1">${['Latest','Opportunities','Events','Updates','Pinned'].map((t,i)=>`<button class="tab ${i===0?'active':''}" onclick="tabSwitch(this)">${t}</button>`).join('')}</div>
+    <button class="btn ghost sm" style="margin-left:20px" onclick="openModal()">${I('plus')}New announcement</button></div>
+  ${posts.map(postCard).join('')}
+</div></div>
+<aside class="rpanel">${creatorPanel()}</aside>`;
+
+function postCard(p){
+  return `<article class="card post">
+    <div class="post-head">${`<span class="av" style="width:44px;height:44px;background:var(--espresso)">${logo('#ECE8E1',26)}</span>`}
+      <div style="flex:1"><div class="row"><b>elevX</b><span class="chip official">Official</span></div><small>${p.date} · ${p.type}</small></div>
+      <button class="icon-btn" title="Pin">${I('bookmark')}</button><button class="icon-btn">${I('moreh')}</button></div>
+    <div class="post-body" ${p.mood?'style="grid-template-columns:1fr"':''}><div><h3>${p.title}</h3><p>${p.body}</p>
+      ${p.chips?`<div class="meta-chips">${p.chips.map(([i,a,b])=>`<div class="meta">${I(i)}<div>${a}<small>${b}</small></div></div>`).join('')}</div>`:''}
+      ${p.rsvp?`<div class="row" style="margin-top:14px;gap:8px"><span class="chip">${I('cal')} Sat, 24 Oct · 11 AM</span><span class="chip">${I('pin')} elevX Studio</span><span class="chip green">92 attending</span></div>`:''}
+      ${p.mood?`<div class="mood">${p.mood.map(k=>`<div style="background:${art(k)}"></div>`).join('')}<div class="more">+3</div></div>`:''}
+    </div>
+    ${p.mood?'':`<div class="thumb" style="background:${p.img}">${p.cap?`<div class="cap ${p.capDark?'dark':''}">${p.cap}</div>`:''}</div>`}</div>
+    <div class="post-foot">
+      <button class="${liked[p.id]?'liked':''}" onclick="liked['${p.id}']=!liked['${p.id}'];go('announcements')">${I('heart')}${p.likes+(liked[p.id]?1:0)}</button>
+      <button>${I('comment')}${p.resp} responses</button><button>${I('share')}Share</button>
+      <span class="r">${p.cta?`<button class="btn primary sm" onclick="toast('Opened 32 responses')">View responses ${I('arrow')}</button>`:p.rsvp?`<button class="btn soft sm" onclick="go('home')">See RSVPs ${I('arrow')}</button>`:`<button class="muted" style="font-size:12.5px">View responses →</button>`}</span>
+    </div></article>`;
+}
+function creatorPanel(){
+  return `<div class="row" style="gap:8px"><div class="h3" style="font-size:17px">Discover verified creators</div></div>
+  <small class="muted">Curated by Incluhub · Verified. Relevant. Reliable.</small>
+  <div class="input" style="margin-top:14px">${I('search')}<input placeholder="Search by skill, location…" /></div>
+  <div class="filter-chips">${['All','Photographers','Models','Stylists','UGC'].map((c,i)=>`<button class="fchip ${i===0?'on':''}" onclick="chipToggle(this)">${c}</button>`).join('')}</div>
+  ${creators.slice(0,5).map(c=>`<div class="creator-row"><div class="ph" style="${portrait(c.n)};display:grid;place-items:center;color:rgba(255,255,255,.7);font-family:var(--serif);font-size:24px">${initials(c.n)}</div>
+    <div style="flex:1;min-width:0"><div class="between"><b>${c.n}</b><span class="match">${c.m}%</span></div><div style="font-size:12.5px;color:var(--ink2)">${c.r}</div><div class="loc">${I('pin')}${c.c}</div><div class="tags">${c.t.slice(0,2).map(t=>`<span class="chip">${t}</span>`).join('')}</div></div></div>`).join('')}
+  <button class="btn soft" style="width:100%;justify-content:center" onclick="go('discover')">Explore all creators ${I('arrow')}</button>
+  <div class="ask-ai"><span style="color:var(--ink)">${I('spark')}</span><div style="flex:1"><div class="serif" style="font-size:22px;line-height:1.15">Ask elevX AI</div><small class="muted">Marketing insights, content ideas, trend analysis and creator recommendations tailored to elevX.</small></div><button class="go" onclick="aiMode='trends';go('ai')">${I('arrow')}</button></div>
+  <div class="row muted" style="justify-content:flex-end;margin-top:16px;font-size:11px;letter-spacing:.14em">POWERED BY <b style="color:var(--ink);letter-spacing:.3em;font-weight:500">INCLUHUB</b></div>`;
+}
+
+/* ---------- POLLS ---------- */
+let myVote = null;
+const pollOpts = [['Stone Grey','#9A958E',54],['Off-White','#EAE5DB',38],['Washed Black','#2B2927',31],['Olive','#5E6650',21],['Sand','#C9B89C',14]];
+renderers.polls = () => {
+  const total = pollOpts.reduce((a,o)=>a+o[2],0) + (myVote!==null?1:0);
+  const cnt = (i)=> pollOpts[i][2] + (myVote===i?1:0);
+  return `
+<div class="scroll"><div class="pad">
+  <div class="page-head"><div><div class="h1">Polls & Feedback</div><p>Ask your community. Hear what resonates. Decide with confidence.</p></div><button class="btn primary" onclick="openModal('Poll')">${I('plus')}Create poll</button></div>
+  <div class="tabs">${['Active (2)','Closed (7)','Drafts (1)'].map((t,i)=>`<button class="tab ${i===0?'active':''}" onclick="tabSwitch(this)">${t}</button>`).join('')}</div>
+  <article class="card post">
+    <div class="post-head">${av('Shiva Singh',44)}<div style="flex:1"><div class="row"><b>Shiva Singh</b><span class="chip official">Brand</span></div><small>2 days ago · Visible to all creators</small></div><span class="chip amber">Closes in 2 days</span><button class="icon-btn">${I('more')}</button></div>
+    <div class="h2" style="font-size:28px">Which colourway should lead the Everyday Overshirt?</div>
+    <p style="color:var(--ink2);margin-top:6px">We’re finalising the hero piece for Everyday Movement and would love your honest opinion. Which colour would you and your audience actually wear every day?</p>
+    <div class="poll-opts">${pollOpts.map(([n,c],i)=>`<button class="popt ${myVote===i?'sel':''}" onclick="myVote=${i};go('polls');toast('Vote recorded: ${n}')"><div class="pic">${bag(c,100)}</div><div class="lab"><span class="radio"></span>${n}</div></button>`).join('')}</div>
+    <div class="between" style="font-size:13px"><div class="row"><div class="stack">${['Aisha Khan','Rohan Mehta','Neha Kapoor','Zoya Mirza','Kabir Ahuja'].map(n=>av(n,26)).join('')}</div><span class="muted">${total} creators have voted</span></div><span class="muted">Multiple choice off · Anonymous off</span></div>
+    <div class="post-foot"><button>${I('heart')}Like</button><button>${I('comment')}Comment</button><button>${I('share')}Share</button><span class="r muted">32 comments</span></div>
+    ${[['Aisha Khan','Photographer','2 days ago','Stone Grey photographs beautifully in natural light — calm and easy to pair with anything. 🤍',12],['Arjun Rao','Stylist','2 days ago','Off-White for summer layering. Works from office to weekend without trying too hard.',8],['Diya Nair','UGC Creator','1 day ago','Washed Black! My audience lives in black basics — it would sell out on travel reels.',10]].map(([n,r,w,t,l])=>`
+      <div class="comment">${av(n,36)}<div><div><b>${n}</b> <span class="small">· ${r} · ${w}</span></div><div style="color:var(--ink2)">${t}</div><div class="comment-actions"><button>Reply</button><button class="row" style="gap:4px">${I('heart')}${l}</button></div></div></div>`).join('')}
+    <div class="input-row">${av('Shiva Singh',34)}<div class="input"><input placeholder="Add a comment…" />${I('smile')}</div><button class="send">${I('send')}</button></div>
+  </article>
+
+  <article class="card mini-poll">
+    <div class="between"><div class="row">${av('Vikram Shah',36)}<div><b style="font-weight:500">Vikram Shah</b><div class="muted" style="font-size:12px">Content · 5 hours ago</div></div></div><span class="chip amber">Closes in 4 days</span></div>
+    <div class="h3" style="margin:14px 0 10px;font-size:16px">Which content format should lead Everyday Movement?</div>
+    ${[['Day-in-the-life reels',58],['“One tee, seven days” carousel',27],['Short brand film on YouTube',15]].map(([t,p],i)=>`<div class="rsvp-bar ${i===0?'win':''}"><div class="fill" style="width:${p}%"></div><span>${t}</span><em>${p}%</em></div>`).join('')}
+    <small class="muted">61 responses · 57 unique creators</small>
+  </article>
+</div></div>
+
+<aside class="rpanel">
+  <div class="between"><div><div class="row">${I('spark')}<div class="h3" style="font-size:18px">AI Insights</div></div><small class="muted">Real responses. Smarter decisions.</small></div><button class="btn ghost sm" onclick="toast('Report exported as PDF')">${I('download')}Export</button></div>
+  <div class="divider"></div>
+  <div class="h3">Poll results</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;margin:12px 0 8px">
+    <div><small class="muted">Total responses</small><div class="serif" style="font-size:34px;font-weight:500;line-height:1.1">${total}</div></div>
+    <div style="border-left:1px solid var(--line);padding-left:16px"><small class="muted">Unique creators</small><div class="serif" style="font-size:34px;font-weight:500;line-height:1.1">${total-6}</div></div></div>
+  ${pollOpts.map(([n,c],i)=>{const pc=Math.round(cnt(i)/total*100);return `<div class="res-row"><span class="sw" style="background:${c}"></span><span>${n}</span><div class="bar"><i style="width:0;background:${c}" data-w="${pc}%"></i></div><span class="pc">${pc}%</span><span class="ct">${cnt(i)}</span></div>`}).join('')}
+  <div class="winner"><div style="flex:1"><div class="row" style="gap:6px;color:var(--sageInk);font-size:12px;font-weight:600">${I('award')}Leading colourway</div><div class="serif" style="font-size:26px;font-weight:500;line-height:1.1;margin:4px 0">Stone Grey</div><small style="color:var(--ink2)">34% of creators chose Stone Grey, making it the clear favourite.</small></div>${bag('#9A958E',78)}</div>
+  <div class="h3" style="margin-top:6px">What creators said</div>
+  ${[['Easy to wear every day','“Goes with everything I own.”'],['Camera-friendly','“Looks great in natural light.”'],['Calm & honest','“Feels very elevX — quiet, not loud.”']].map(([a,b],i)=>`<div class="quote"><span class="n">${i+1}</span><div><b style="font-weight:500">${a}</b><div class="muted" style="font-size:12.5px">${b}</div></div></div>`).join('')}
+  <div class="divider"></div>
+  <div class="row">${I('spark')}<b style="font-weight:600">AI recommendation</b></div>
+  <p style="color:var(--ink2);margin-top:6px;font-size:13px">Stone Grey aligns best with elevX’s everyday positioning and creator content style. Lead with Stone Grey and support with Off-White as a secondary colourway; keep Washed Black for travel-led content.</p>
+  <button class="btn soft" style="width:100%;justify-content:center;margin-top:14px" onclick="go('chat','team')">Share with internal team ${I('arrow')}</button>
+</aside>`;
+};
+
+/* ---------- CAMPAIGNS ---------- */
+renderers.campaigns = () => {
+  const cols = [
+    ['Planning','#C9C4BC',[['Winter Layers Edit','Dec 2026','Moodboard & budget',15,['Tanya Desai']]]],
+    ['Casting','#9C8F7E',[['One Tee, Seven Days','Oct 20 – 31','11 applicants · 3 slots',40,['Diya Nair','Kabir Ahuja']],['Conscious Tomorrow Film','Nov 2','Incluhub shortlist ready',30,['Sana Qureshi']]]],
+    ['In production','#2E2925',[['Everyday Movement','Oct 12 – 14','Agreement sent to Rohan',65,['Rohan Mehta','Meera Sharma','Arjun Rao']],['elevX Studio Pop-up','Oct 24','92 RSVPs · set design locked',80,['Aisha Khan','Diya Nair']]]],
+    ['Live','#151413',[['Work | Travel | Everyday','Sep 12 – 30','104 likes · 12 responses',100,['Aisha Khan','Naina Reddy','Kabir Ahuja']]]],
+  ];
+  return `<div class="scroll"><div class="pad">
+    <div class="page-head"><div><div class="h1">Campaigns</div><p>Plan, cast and run creator collaborations end-to-end.</p></div><div class="row"><button class="btn ghost">${I('filter')}Filter</button><button class="btn primary" onclick="toast('New campaign draft created')">${I('plus')}New campaign</button></div></div>
+    <div class="kanban">${cols.map(([h,c,cards])=>`<div><div class="col-h"><span class="d" style="background:${c}"></span>${h}<span class="ct">${cards.length}</span></div>
+      ${cards.map(([t,d,s,p,ppl])=>`<div class="card kcard"><div class="between"><span class="chip">${I('cal')}${d}</span><button class="muted">${I('moreh')}</button></div><h4>${t}</h4><div class="muted" style="font-size:12.5px">${s}</div>
+      <div class="progress"><i style="width:${p}%;background:${c}"></i></div><div class="between"><div class="stack">${ppl.map(n=>av(n,26)).join('')}</div><small class="muted">${p}%</small></div></div>`).join('')}
+      <button class="btn ghost sm" style="width:100%;justify-content:center;border-style:dashed">${I('plus')}Add</button></div>`).join('')}</div>
+  </div></div>`;
+};
+
+/* ---------- DISCOVER ---------- */
+let saved = {'Kabir Ahuja':true};
+renderers.discover = () => `
+<div class="scroll"><div class="pad">
+  <div class="page-head"><div><div class="h1">Discover Creators</div><p>Verified talent, hand-picked for elevX by Incluhub.</p></div><button class="btn ghost">${I('bookmark')}Shortlist (${Object.values(saved).filter(Boolean).length})</button></div>
+  <div class="card ai-banner"><div class="spark">${I('spark')}</div><div style="flex:1"><div class="h3" style="font-size:16px">8 new matches for “Everyday Movement”</div><div class="muted" style="font-size:13px">Based on your brief, brand aesthetic, audience overlap and past collaboration performance.</div></div><select class="btn ghost" style="outline:0"><option>Everyday Movement</option><option>One Tee, Seven Days</option><option>elevX Studio Pop-up</option></select></div>
+  <div class="between" style="flex-wrap:wrap">
+    <div class="filter-chips" style="margin:0">${['All','Photographers','Videographers','Models','Stylists','MUAs','UGC Creators','Influencers'].map((c,i)=>`<button class="fchip ${i===0?'on':''}" onclick="chipToggle(this)">${c}</button>`).join('')}</div>
+    <div class="row"><span class="chip">${I('pin')}Pan India</span><span class="chip">Budget ≤ ₹1.5L</span><span class="chip">Sort: Best match</span></div>
+  </div>
+  <div class="disc-grid" style="margin-top:18px">${creators.map(c=>`
+    <div class="card dcard"><div class="ph" style="${portrait(c.n)}"><div class="initial">${initials(c.n)}</div><span class="match">${I('spark')} ${c.m}% match</span>
+      <button class="save ${saved[c.n]?'on':''}" onclick="saved['${c.n}']=!saved['${c.n}'];go('discover')">${I('heart')}</button></div>
+      <div class="bd"><div class="row" style="gap:6px"><b style="font-size:15px;font-weight:600">${c.n}</b><span class="verified">${I('check')}</span></div>
+        <div class="muted" style="font-size:12.5px">${c.r} · ${c.c}</div>
+        <div class="tags">${c.t.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+        <div class="nums"><div><b>${c.f}</b><small>Followers</small></div><div><b>${c.er}</b><small>Engagement</small></div><div><b>${c.rate}</b><small>Avg. rate</small></div></div>
+        <div class="why">${I('spark')}<span>${c.why}</span></div>
+        <div class="row" style="margin-top:12px"><button class="btn ghost sm" style="flex:1;justify-content:center" onclick="go('chat','dm:${c.n}')">Message</button><button class="btn primary sm" style="flex:1;justify-content:center" onclick="toast('Invite sent to ${c.n}')">Invite to network</button></div>
+      </div></div>`).join('')}</div>
+  <div class="row muted" style="justify-content:center;margin-top:28px;font-size:11px;letter-spacing:.14em">CURATED &amp; VERIFIED BY&nbsp;<b style="color:var(--ink);letter-spacing:.3em;font-weight:500">INCLUHUB</b></div>
+</div></div>`;
+
+/* ---------- CHAT (channels, internal, DMs) ---------- */
+renderers.chat = (key) => {
+  if(key.startsWith('dm:')) return dmView(key.slice(3));
+  const ch = [...channels, ...internal].find(c=>c.id===key);
+  const isInt = internal.includes(ch);
+  const msgs = chats[key] || [];
+  return `<div class="chat">
+    <div class="chat-head"><div style="flex:1"><div class="t">${isInt?I('lock'):'<span class="muted">#</span>'}${ch.name}${isInt?'<span class="chip" style="margin-left:6px">Internal</span>':''}</div><small>${ch.desc} · ${ch.members} members</small></div>
+      <div class="stack">${['Aisha Khan','Rohan Mehta','Nisha Gupta','Vikram Shah'].map(n=>av(n,28)).join('')}</div>
+      <button class="icon-btn">${I('search')}</button><button class="icon-btn">${I('pin')}</button><button class="icon-btn">${I('more')}</button></div>
+    <div class="msgs" id="msgs">${msgs.map(msgRow).join('')}</div>
+    <div class="composer"><textarea id="compose" placeholder="Message #${ch.name}…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg('${key}')}"></textarea>
+      <div class="tools"><button class="icon-btn">${I('plus')}</button><button class="icon-btn">${I('clip')}</button><button class="icon-btn">${I('smile')}</button><button class="icon-btn" title="Poll" onclick="openModal('Poll')">${I('poll')}</button><button class="icon-btn">${I('image')}</button><button class="send" onclick="sendMsg('${key}')">${I('send')}</button></div></div>
+  </div>
+  <aside class="rpanel">${key==='team'?threadPanel():channelPanel(ch,isInt)}</aside>`;
+};
+function msgRow(m){
+  if(m.day) return `<div class="day"><span>${m.day}</span></div>`;
+  const a = m.brand ? `<span class="av" style="width:40px;height:40px;background:var(--espresso)">${logo('#ECE8E1',24)}</span>` : av(m.n,40);
+  return `<div class="msg">${a}<div style="flex:1;min-width:0">
+    <div><span class="name">${m.n}</span>${m.brand?'<span class="chip official role">Official</span>':m.role?`<span class="chip role">${m.role}</span>`:''}<span class="time">${m.t}</span></div>
+    <p>${m.txt}</p>
+    ${m.intro?`<div class="intro-card"><div class="ph" style="${portrait('Shiva Singh')}"></div><div><div class="eyebrow">Introducing</div><div class="serif" style="font-size:30px;line-height:1.1;margin-top:4px">Shiva Singh</div><div class="serif" style="font-size:18px;color:var(--ink2)">Brand Admin</div><div class="divider" style="width:40px;margin:12px 0"></div><div class="serif" style="font-style:italic;color:var(--ink2);font-size:16px">“Building meaningful creator partnerships that bring elevX{RQ}s vision to life.”</div></div></div>`:''}
+    ${m.file?`<div class="attach"><span class="pdf">PDF</span><div style="flex:1"><b style="font-weight:500;font-size:13px">${m.file[0]}</b><div class="muted" style="font-size:11.5px">${m.file[1]}</div></div>${I('download')}</div>`:''}
+    ${m.re?`<div class="reacts">${m.re.map(([e,c])=>`<button class="react" onclick="this.classList.toggle('mine')">${e} ${c}</button>`).join('')}<button class="react muted">${I('smile')}</button></div>`:''}
+    ${m.replies?`<div class="thread-link"><div class="stack">${['Nisha Gupta','Vikram Shah','Tanya Desai'].map(n=>av(n,20)).join('')}</div>${m.replies} replies <span class="muted" style="font-weight:400">· Last reply 10:20 AM</span></div>`:''}
+  </div></div>`;
+}
+function sendMsg(key){
+  const ta = document.getElementById('compose'); const v = ta.value.trim(); if(!v) return;
+  const t = new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  if(key.startsWith('dm:')){ (dmThreads[key.slice(3)] ||= fallbackDM(key.slice(3))).push({me:true,t,txt:v.replace(/</g,'&lt;')}); }
+  else (chats[key] ||= []).push({n:'Shiva Singh', me:true, role:'Brand', t, txt:v.replace(/</g,'&lt;')});
+  go('chat', key); setTimeout(()=>document.getElementById('compose')?.focus(),0);
+}
+function threadPanel(){
+  return `<div class="between"><div><div class="h3" style="font-size:18px">Thread</div><small class="muted">Team announcement</small></div><button class="icon-btn">${I('x')}</button></div>
+  <div class="card" style="padding:14px;margin:14px 0;box-shadow:none"><div class="row" style="align-items:flex-start">${av('Karthik Varma',36)}<div><b style="font-weight:600;font-size:13px">Karthik Varma</b> <small class="muted">10:00 AM</small><p style="color:var(--ink2);font-size:13px">We’re excited to introduce our Brand Admin who will lead creator collaborations.</p></div></div></div>
+  <small class="muted">5 replies</small>
+  ${[['Shiva Singh','10:05 AM','Thank you, Arjun! Excited to work with all of you.'],['Nisha Gupta','10:12 AM','Welcome aboard, Shiva!'],['Vikram Shah','10:15 AM','Looking forward to working together.'],['Tanya Desai','10:18 AM','Excited for what’s coming! ✨'],['Siddharth Rao','10:20 AM','Let’s make this bigger! 🚀']].map(([n,t,x])=>`<div class="comment">${av(n,34)}<div><b>${n}</b> <span class="small">${t}</span><div style="color:var(--ink2);font-size:13px">${x}</div></div></div>`).join('')}
+  <div class="input">${'<input placeholder="Reply in thread…" />'}${I('smile')}</div>
+  <div class="divider"></div>
+  <div class="between"><div class="h3">Shared files</div><button class="muted" style="font-size:12px" onclick="go('files')">View all</button></div>
+  ${[['folder','Creator Strategy 2026','8 items'],['file','Brand Deck.pdf','12.4 MB'],['file','Q4 Creator Budget.xlsx','860 KB']].map(([i,a,b])=>`<div class="list-item" style="align-items:center"><span class="icon-btn" style="background:var(--soft)">${I(i)}</span><div><b style="font-weight:500">${a}</b><div class="muted" style="font-size:12px">${b}</div></div></div>`).join('')}`;
+}
+function channelPanel(ch,isInt){
+  const mem = isInt ? ['Karthik Varma','Nisha Gupta','Vikram Shah','Tanya Desai','Siddharth Rao','Shiva Singh'] : ['Aisha Khan','Rohan Mehta','Meera Sharma','Arjun Rao','Diya Nair','Kabir Ahuja','Naina Reddy'];
+  return `<div class="eyebrow">About this channel</div><div class="h2" style="margin:6px 0 4px">${isInt?'':'#'}${ch.name}</div><p class="muted">${ch.desc}</p>
+  <div class="row" style="margin:14px 0;gap:8px">${isInt?`<span class="chip">${I('lock')}Team only</span>`:`<span class="chip green">Creators can post</span>`}<span class="chip">${ch.members} members</span></div>
+  <div class="divider"></div>
+  <div class="h3" style="margin-bottom:6px">Pinned</div>
+  <div class="card" style="padding:14px;box-shadow:none;background:var(--soft);border:0"><div class="row" style="gap:6px;font-size:12px" >${I('pin')}<b style="font-weight:500">Community guidelines</b></div><small class="muted">Be kind, credit collaborators, keep briefs confidential.</small></div>
+  <div class="divider"></div>
+  <div class="between"><div class="h3">Members</div><button class="muted" style="font-size:12px">Manage</button></div>
+  ${mem.map(n=>`<div class="list-item" style="align-items:center;padding:8px 0;border:0">${av(n,32)}<div style="flex:1"><b style="font-weight:500;font-size:13px">${n}</b><div class="muted" style="font-size:11.5px">${(people[n]&&people[n].role)||(isInt?'Brand team':'Creator')}</div></div>${Math.random()>.4?'<span style="width:8px;height:8px;border-radius:50%;background:#5DBB6E"></span>':''}</div>`).join('')}`;
+}
+function dmView(n){
+  const p = people[n] || {role:'Creator',city:'India',tags:[]};
+  const msgs = dmThreads[n] || fallbackDM(n);
+  const key = 'dm:'+n;
+  return `<div class="chat">
+    <div class="chat-head"><button class="icon-btn" onclick="go('home')">${I('back')}</button><span class="dm-av">${av(n,44)}</span><div style="flex:1"><div class="t">${n}${p.online?'<span style="width:8px;height:8px;border-radius:50%;background:#5DBB6E;margin-left:4px"></span>':''}</div><small>${p.role} · ${p.city}</small></div>
+      <button class="icon-btn">${I('video')}</button><button class="icon-btn">${I('phone')}</button><button class="icon-btn">${I('more')}</button></div>
+    <div class="msgs">${msgs.map(m=> m.day?`<div class="day"><span>${m.day}</span></div>` :
+      `<div class="bub-row ${m.me?'me':''}">${m.me?av('Shiva Singh',30):av(n,30)}<div class="bub">${m.txt}
+        ${m.file?`<div class="attach" style="margin-top:10px"><span class="pdf">PDF</span><div style="flex:1"><b style="font-weight:500;font-size:13px">${m.file[0]}</b><div class="muted" style="font-size:11.5px">${m.file[1]}</div></div>${I('download')}</div>`:''}
+        ${m.atts?`<div class="att-row">
+          <div class="att-tile"><div class="tp" style="background:var(--soft)"><span class="pdf">PDF</span></div><div class="nm">Campaign_Brief.pdf<small>2.4 MB</small></div></div>
+          <div class="att-tile"><div class="tp" style="background:${art('linen')}"></div><div class="nm">Moodboard.pdf<small>4.1 MB</small></div></div>
+          <div class="att-tile"><div class="tp" style="background:${art('tee')}"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div><div class="nm">Reference Video<small>1:12 mins</small></div></div></div>`:''}
+        ${m.deal?`<div class="deal"><div class="between"><b style="font-weight:600;font-size:12.5px">Offer · Everyday Movement</b><span class="chip green">Accepted</span></div><div style="font-size:12.5px;margin-top:4px">₹1,50,000 · 12–14 Oct · 1 film + 3 reels + BTS</div></div>`:''}
+        <span class="tm">${m.t}${m.me?' · Seen':''}</span></div></div>`).join('')}</div>
+    <div class="composer"><textarea id="compose" placeholder="Message ${n.split(' ')[0]}…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg('${key}')}"></textarea>
+      <div class="tools"><button class="icon-btn">${I('clip')}</button><button class="icon-btn">${I('smile')}</button><button class="icon-btn" title="Send brief">${I('file')}</button><button class="btn soft sm" style="margin-left:6px" onclick="toast('Offer card attached')">${I('brief')}Send offer</button><button class="send" onclick="sendMsg('${key}')">${I('send')}</button></div></div>
+  </div>
+  <aside class="rpanel">
+    <div class="profile-cover" style="background:${art('tee')}"><div class="cap" style="font-size:16px;max-width:120px">Visual<br>Stories<br>For A<br>Bigger<br>Tomorrow.</div>${av(n,86)}</div>
+    <div class="row" style="gap:6px"><div style="font-size:22px;font-weight:600">${n}</div><span class="verified">${I('check')}</span></div>
+    <div class="muted">${p.role} · ${p.city}</div>
+    <div class="row" style="gap:6px;margin-top:6px;font-size:12px;color:var(--ink2)">${I('award')}Verified by Incluhub</div>
+    <div class="row" style="margin:16px 0 12px"><button class="btn primary" style="flex:1;justify-content:center">View full profile</button><button class="btn soft" style="flex:1;justify-content:center;color:var(--ink)" onclick="this.textContent='✓ Shortlisted';toast('${n} added to shortlist')">Add to shortlist</button></div>
+    <div class="tags">${(p.tags||[]).map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+    <div class="pstats"><div><b>${p.exp||'3+'}</b><small>Years experience</small></div><div><b>${p.projects||'40+'}</b><small>Projects</small></div><div><b>${p.city}</b><small>Location</small></div></div>
+    <div class="h3" style="margin-bottom:4px">About</div>
+    <p style="color:var(--ink2);font-size:13px">${p.bio||'Creative professional in the elevX community, verified by Incluhub.'}</p>
+    <div class="h3" style="margin:16px 0 10px">Portfolio highlights</div>
+    <div class="gallery"><div style="background:${art('knit')};display:grid;place-items:center"><span class="play" style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M8 5v14l11-7z" fill="#151413"/></svg></span></div><div style="background:${art('tee')}"></div><div style="background:${art('coast')};position:relative"><div class="cap" style="font-size:12px;right:8px">Movement<br>Lives Here</div></div></div>
+    ${p.discussion?`<div class="h3" style="margin:18px 0 8px">Current discussion</div>
+    <div class="card" style="padding:12px 14px;box-shadow:none;background:var(--soft);border:0;display:flex;gap:12px;align-items:center">${I('file')}<div><b style="font-weight:600;font-size:13px">${p.discussion[0]}</b><div class="muted" style="font-size:12px">${p.discussion[1]}</div></div></div>
+    <div class="h3" style="margin:18px 0 6px">Next steps</div>
+    <div class="steps">${[['Review agreement draft (elevX)',1],['Share advance payment details',0],['Confirm shoot schedule',0],['Kick-off call with team',0]].map(([t,on])=>`<div><span class="bx ${on?'on':''}" onclick="this.classList.toggle('on');this.innerHTML=this.classList.contains('on')?'${I('check').replace(/"/g,'&quot;')}':''">${on?I('check'):''}</span>${t}</div>`).join('')}</div>`:''}
+    <div class="lock-note">${I('lock')}<div><b style="font-weight:500">Private conversation.</b><br>Only elevX Network admins and ${n.split(' ')[0]} can view these messages.</div></div>
+  </aside>`;
+}
+
+/* ---------- KOSARAH AI ---------- */
+let aiMode = 'creators';
+let shortlist = new Set(['Rohan Mehta']);
+const aiExtra = {creators:[], trends:[]};
+const aiRecs = {
+  'Models':[
+    {n:'Meera Sharma', c:'Bangalore', t:['Fashion','E-commerce','Lifestyle'], rate:'₹50,000 – ₹65,000', m:94, avail:'Free 12–20 Oct'},
+    {n:'Kabir Ahuja', c:'Mumbai', t:['Streetwear','Fitness','Lifestyle'], rate:'₹60,000 – ₹80,000', m:90, avail:'Free from 14 Oct'},
+  ],
+  'Videographers':[
+    {n:'Rohan Mehta', c:'Hyderabad', t:['Brand Films','Fashion','Commercial'], rate:'₹1,20,000 – ₹1,50,000', m:95, avail:'Free 12–18 Oct'},
+  ],
+};
+const trends = [
+  ['Quiet, Everyday Essentials','Shoppers are moving away from logo-heavy fashion toward well-made basics that work across work, travel and downtime.','Less noise. More wear.',art('rack')],
+  ['Conscious Materials','Organic cotton, linen and recycled blends — plus transparent sourcing — are now baseline expectations for younger buyers.','Fabric with a conscience.',art('linen')],
+  ['Real-People Creator Content','Unposed, day-in-the-life UGC outperforms polished studio campaigns on saves, shares and conversion.','Real moments sell.',art('tee')],
+  ['Comfort-Led Versatility','Relaxed fits and breathable fabrics that move from desk to commute to weekend are driving repeat purchase.','Made to move.',art('knit')],
+  ['D2C & Social Commerce (India)','Tier-1 and tier-2 Gen Z discover new apparel brands on Instagram and creator storefronts before visiting marketplaces.','Discovered on reels, bought in a tap.',art('coast')],
+];
+const aiSuggest = {
+  creators:[['users','Find a stylist'],['pin','Suggest a location'],['image','Compare portfolios'],['brief','Draft outreach message']],
+  trends:[['spark','Give campaign ideas'],['users','Audience insights (India)'],['file','Content themes'],['compass','Suggest creators']],
+};
+const aiCanned = {
+  creators:'Done — I’ve added these to your brief. Based on your shortlist, the estimated total is <b>₹2,60,000</b> (within budget). Want me to draft an outreach message to each creator?',
+  trends:'For Everyday Movement, I’d lead with <b>day-in-the-life reels</b> from 4–5 creators across different cities, then a “one overshirt, seven days” carousel. Shall I turn this into a campaign brief?',
+};
+
+renderers.ai = () => {
+  const now = '10:24 AM';
+  const aiRow = inner => `<div class="a-row"><span class="ai-orb sm">${I('spark')}</span><div class="body"><div class="row" style="gap:8px;margin-bottom:6px"><b style="font-weight:600">elevX AI</b><span class="tm">${now}</span></div>${inner}</div></div>`;
+  const userRow = (txt,t=now) => `<div class="u-row"><div><div class="u-bub">${txt}</div><div class="tm" style="text-align:right;margin-top:4px">${t}</div></div>${av('Shiva Singh',38)}</div>`;
+  const recCard = c => `<div class="rec-card"><div class="ph" style="${portrait(c.n)}">${initials(c.n)}<span class="match">${c.m}% match</span></div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column"><div class="row" style="gap:6px"><b>${c.n}</b><span class="verified">${I('check')}</span></div>
+      <div class="tags" style="margin-bottom:8px">${c.t.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+      <div class="kv">${I('pin')}${c.c}</div><div class="kv">${I('brief')}${c.rate} / day</div><div class="kv">${I('cal')}${c.avail}</div>
+      <div class="row" style="margin-top:auto;padding-top:8px"><button class="btn soft sm" style="flex:1;justify-content:center" onclick="go('chat','dm:${c.n}')">View profile</button>
+      <button class="add-btn ${shortlist.has(c.n)?'on':''}" title="Add to shortlist" onclick="shortlist.has('${c.n}')?shortlist.delete('${c.n}'):shortlist.add('${c.n}');go('ai')">${I(shortlist.has(c.n)?'check':'plus')}</button></div></div></div>`;
+  const extra = aiExtra[aiMode].map(m => m.u ? userRow(m.u, m.t) : m.typing ? `<div class="a-row"><span class="ai-orb sm">${I('spark')}</span><div class="typing"><i></i><i></i><i></i></div></div>` : aiRow(`<div class="a-text">${m.a}</div>`)).join('');
+
+  const creatorsConvo = `
+    ${userRow('I’m planning the Everyday Movement campaign.<br>Budget: ₹2,50,000 – ₹3,00,000.<br>I need 2 models and 1 videographer, with a natural, real-life, documentary style. Can you suggest the right creators?')}
+    ${aiRow(`<div class="a-text">Here are my top recommendations based on your brief and budget. These creators match your aesthetic, experience and availability.</div>
+      ${Object.entries(aiRecs).map(([k,list])=>`<div class="rec-sec"><div class="between"><div><b style="font-weight:600;font-size:15px">${k}</b> <span class="muted">(${list.length} recommended)</span></div><button class="row muted" style="font-size:12.5px;gap:6px" onclick="go('discover')">View more ${I('arrow')}</button></div>
+        <div class="rec-grid">${list.map(recCard).join('')}</div></div>`).join('')}
+      <div class="a-text" style="margin-top:14px">All three are available for your tentative dates and fit within your budget. Would you like me to shortlist more options or help you start conversations?</div>`)}`;
+
+  const trendsConvo = `
+    ${userRow('What are the current marketing trends in the everyday apparel and conscious clothing market, both globally and in India?','10:14 AM')}
+    ${aiRow(`<div class="a-text">Here’s a concise overview of key marketing trends in everyday and conscious apparel, based on recent global and India-specific industry insights:</div>
+      <div class="trend-card"><div class="th"><span style="color:var(--accent)">${I('spark')}</span><span class="serif" style="font-size:23px;font-weight:500">Key Trends in Everyday Apparel Marketing</span><span class="src">Sources: Business of Fashion · McKinsey State of Fashion · WGSN · Redseer · India Retailing</span></div>
+        ${trends.map(([h,p,tag,bg],i)=>`<div class="trow"><span class="num">${i+1}</span><div><h5>${h}</h5><p>${p}</p></div><div class="tx" style="background:${bg}"></div><div class="tag">${tag}</div></div>`).join('')}
+        <div class="opps"><div><div class="row" style="margin-bottom:8px">${I('poll')}<span class="serif" style="font-size:20px">Opportunities for elevX Network</span></div>
+          <ul><li>Lead Everyday Movement with unposed, day-in-the-life creator reels.</li><li>Show the fabric up close — weave, weight and how it moves.</li><li>Run a “one piece, seven days” styling series with 5 creators across cities.</li><li>Share sourcing and care stories to back up the “conscious” promise.</li><li>Use creator storefront links on Instagram for tap-to-buy launches.</li></ul></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><button class="btn primary sm" onclick="aiAsk('Generate campaign ideas from these trends')">Generate campaign ideas ${I('arrow')}</button><button class="btn ghost sm" onclick="aiAsk('Show me a competitor analysis')">Show competitor analysis</button></div></div>
+      </div>`)}`;
+
+  const briefPanel = `
+    <div class="between"><div class="h3" style="font-size:18px">Current brief</div><button class="muted" style="font-size:12.5px" onclick="toast('Brief editing — coming soon')">Edit</button></div>
+    <div class="card" style="padding:4px 16px;margin-top:12px;box-shadow:none">
+      ${[['brief','Campaign type','Everyday Movement · Creator campaign'],['award','Budget','₹2,50,000 – ₹3,00,000'],['users','Requirements','2 Models<br>1 Videographer'],['spark','Style','Natural, Real-life, Documentary'],['pin','Preference','Hyderabad / Mumbai / Bangalore<br>Available next 2–3 weeks']].map(([i,a,b])=>`<div class="brief-item"><span class="ic">${I(i)}</span><div><b>${a}</b><span>${b}</span></div></div>`).join('')}
+    </div>
+    <div class="row" style="margin:22px 0 10px">${I('spark')}<div class="h3" style="font-size:16px">AI insights</div></div>
+    <div class="ins">${['Selected creators have strong real-life, unposed content','All are available within your budget','Audience overlap with elevX’s 21–32 urban buyer'].map(t=>`<div><span class="ck">${I('check')}</span>${t}</div>`).join('')}</div>
+    <div class="h3" style="margin:22px 0 6px">Shortlist <span class="muted" style="font-weight:400">(${shortlist.size})</span></div>
+    ${shortlist.size?[...shortlist].map(n=>`<div class="list-item" style="align-items:center;padding:8px 0">${av(n,32)}<div style="flex:1"><b style="font-weight:500;font-size:13px">${n}</b></div><button class="muted" onclick="shortlist.delete('${n}');go('ai')">${I('x')}</button></div>`).join(''):'<small class="muted">Tap + on a recommendation to add it.</small>'}
+    <button class="btn primary" style="width:100%;justify-content:center;margin-top:16px;padding:12px" onclick="toast('Campaign created with ${shortlist.size} creators');go('campaigns')">Shortlist &amp; create campaign ${I('arrow')}</button>
+    <div class="h3" style="margin:24px 0 2px;font-size:13px">Recent chats</div>
+    <div class="ai-history">${['Everyday Movement creators','Everyday apparel trends','Gen Z audience — India','Pop-up content plan','Competitor analysis: D2C basics brands'].map((t,i)=>`<button onclick="aiMode='${i===1?'trends':'creators'}';go('ai')">${t}</button>`).join('')}</div>`;
+
+  return `<div class="chat">
+    <div class="ai-head"><span class="ai-orb">${I('spark')}</span><div><div class="h2" style="font-size:28px;line-height:1">elevX AI</div><small class="muted">Your creative partner for creators, culture and growth.</small></div>
+      <div class="ai-modes"><button class="${aiMode==='creators'?'on':''}" onclick="aiMode='creators';go('ai')">${I('users')}Find creators</button><button class="${aiMode==='trends'?'on':''}" onclick="aiMode='trends';go('ai')">${I('poll')}Market insights</button></div>
+      <button class="btn ghost sm" onclick="aiExtra[aiMode]=[];toast('New chat started')">${I('plus')}New chat</button></div>
+    <div class="ai-msgs" id="aiMsgs">${aiMode==='creators'?creatorsConvo:trendsConvo}${extra}</div>
+    <div class="suggest">${aiSuggest[aiMode].map(([i,t])=>`<button onclick="aiAsk('${t}')">${I(i)}${t}</button>`).join('')}</div>
+    <div class="composer"><textarea id="aiCompose" placeholder="Ask anything… e.g. find a stylist, suggest a location, compare portfolios" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiAsk()}"></textarea>
+      <div class="tools"><button class="icon-btn">${I('clip')}</button><button class="icon-btn">${I('image')}</button><span class="muted" style="font-size:11.5px;margin-left:6px">Knows your network, campaigns &amp; Incluhub talent pool</span><button class="send" onclick="aiAsk()">${I('send')}</button></div></div>
+    <div class="disclaimer">elevX AI may reference external sources. Please verify critical information.</div>
+  </div>
+  <aside class="rpanel">${aiMode==='creators'?briefPanel:creatorPanel()}</aside>`;
+};
+function aiAsk(q){
+  const ta = document.getElementById('aiCompose');
+  const v = (q || (ta && ta.value) || '').trim(); if(!v) return;
+  const t = new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  const mode = aiMode, list = aiExtra[mode];
+  list.push({u:v.replace(/</g,'&lt;'), t}, {typing:true});
+  go('ai'); const m = document.getElementById('aiMsgs'); m.scrollTop = m.scrollHeight;
+  setTimeout(()=>{ list.pop(); list.push({a:aiCanned[mode]}); if(current.view==='ai' && aiMode===mode){ go('ai'); const m2=document.getElementById('aiMsgs'); m2.scrollTop=m2.scrollHeight; } }, 1300);
+}
+
+/* ---------- FILES ---------- */
+renderers.files = () => `
+<div class="scroll"><div class="pad">
+  <div class="page-head"><div><div class="h1">Brand Assets</div><p>Guidelines, briefs and references your creators can access.</p></div><button class="btn primary" onclick="toast('Upload started')">${I('plus')}Upload</button></div>
+  <div class="tabs">${['All','Brand guidelines','Creative briefs','Moodboards','Contracts · internal'].map((t,i)=>`<button class="tab ${i===0?'active':''}" onclick="tabSwitch(this)">${t}</button>`).join('')}</div>
+  <div class="files">${[
+    ['elevX Brand Deck.pdf','12.4 MB · Guidelines',art('knit'),`<div>${logo('#ECE8E1',64)}</div>`],
+    ['Everyday Movement Brief.pdf','2.4 MB · Brief','#EEECE7',bag('#9A958E',80)],
+    ['Work | Travel | Everyday','28 images · Moodboard',art('linen'),''],
+    ['Colourways — AW26','5 swatches',`linear-gradient(90deg,#9A958E 0 20%,#EAE5DB 20% 40%,#2B2927 40% 60%,#5E6650 60% 80%,#C9B89C 80%)`,''],
+    ['Pop-up Key Visual v2.pdf','6.2 MB · Event',art('tee'),`<div style="font-size:22px;color:#fff;letter-spacing:-.01em">Come as you are.</div>`],
+    ['Logo & Wordmark Kit.zip','18 MB · Guidelines','#EEECE7',`<div>${logo('#151413',64)}</div>`],
+    ['Creator Content Do’s & Don’ts','1.1 MB · Guidelines','#F0EDE7',I('check')],
+    ['Typography Specimen','Cormorant + Inter','#F7F3EC',`<div class="serif" style="font-size:48px">Aa</div>`],
+  ].map(([a,b,bg,inner])=>`<div class="card file"><div class="pv" style="background:${bg}">${inner}</div><div class="bd"><div class="between"><b>${a}</b>${I('moreh')}</div><small>${b}</small></div></div>`).join('')}</div>
+</div></div>`;
+
+/* ============================================================
+   MISC INTERACTIONS
+   ============================================================ */
+function tabSwitch(el){ el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
+function chipToggle(el){ el.parentElement.querySelectorAll('.fchip').forEach(t=>t.classList.remove('on')); el.classList.add('on'); }
+let tt; function toast(t){ const el=document.getElementById('toast'); document.getElementById('toastText').textContent=t; el.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('show'),2200); }
+
+const modalTypes = {
+  Announcement:{ic:'mega', body:`<div class="field"><label>Title</label><input placeholder="e.g. Our Design Philosophy"></div><div class="field"><label>Message</label><textarea placeholder="Share an update with your creators…"></textarea></div><div class="field"><label>Cover image</label><div class="input" style="justify-content:center;border-style:dashed;padding:18px;color:var(--muted)">${I('image')} Drop an image or browse</div></div>`},
+  Poll:{ic:'poll', body:`<div class="field"><label>Question</label><input value="Which colourway should lead the Everyday Overshirt?"></div><div class="field"><label>Options</label>${['Stone Grey','Off-White','Washed Black'].map(o=>`<div class="input" style="margin-bottom:8px">${I('image')}<input value="${o}"></div>`).join('')}<button class="btn ghost sm">${I('plus')}Add option</button></div><div class="row" style="gap:16px;font-size:12.5px"><label class="row"><input type="checkbox"> Multiple answers</label><label class="row"><input type="checkbox" checked> Show AI insights</label><label class="row">Closes in <select class="btn ghost sm"><option>3 days</option><option>1 week</option></select></label></div>`},
+  Opportunity:{ic:'brief', body:`<div class="field"><label>Role</label><input placeholder="e.g. UGC creator for day-in-the-life reels"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="field"><label>Location</label><input value="Pan India"></div><div class="field"><label>Budget</label><input placeholder="₹ 80,000 – 1,20,000"></div></div><div class="field"><label>Brief</label><textarea placeholder="Describe the deliverables…"></textarea></div><label class="row" style="font-size:12.5px"><input type="checkbox" checked> Also ask Incluhub to suggest matching creators</label>`},
+  Event:{ic:'event', body:`<div class="field"><label>Event name</label><input value="elevX Studio Pop-up"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="field"><label>Date & time</label><input value="24 Oct 2026, 11:00 AM"></div><div class="field"><label>Venue</label><input value="elevX Studio, Hyderabad"></div></div><div class="field"><label>RSVP deadline</label><input value="20 Oct 2026"></div>`},
+};
+function openModal(type='Announcement'){
+  document.getElementById('seg').innerHTML = Object.entries(modalTypes).map(([k,v])=>`<button class="${k===type?'on':''}" onclick="openModal('${k}')">${I(v.ic)}${k}</button>`).join('');
+  document.getElementById('modalBody').innerHTML = modalTypes[type].body + `<div class="field" style="margin-top:14px"><label>Audience</label><div class="aud"><button class="fchip on">All creators (312)</button><button class="fchip">UGC creators</button><button class="fchip">Pop-up guests</button><button class="fchip">${I('lock')} Internal team</button></div></div>`;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+
+document.getElementById('notif').innerHTML = `<div class="between" style="padding:6px 18px 8px"><b style="font-weight:600">Notifications</b><button class="muted" style="font-size:12px">Mark all read</button></div>` +
+  [['Rohan Mehta','accepted your offer · ₹1,50,000','12m'],['Incluhub','found 8 new creators for Everyday Movement','1h'],['Aisha Khan','replied in #brand-updates','2h'],['Nisha Gupta','mentioned you in #internal-team','3h']]
+  .map(([n,t,w])=>`<div class="list-item">${n==='Incluhub'?`<span class="av" style="width:34px;height:34px;background:var(--espresso)">${I('spark')}</span>`:av(n,34)}<div style="flex:1;font-size:13px"><b style="font-weight:500">${n}</b> <span class="muted">${t}</span></div><small class="muted">${w}</small></div>`).join('');
+document.addEventListener('click', e=>{ const n=document.getElementById('notif'); if(!e.target.closest('#notif') && !e.target.closest('[title=Notifications]')) n.classList.remove('open'); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); if(e.ctrlKey && e.key==='k'){ e.preventDefault(); document.querySelector('.search input').focus(); }});
+
+fillIcons();
+go('home');
+</script>
+</body>
+</html>

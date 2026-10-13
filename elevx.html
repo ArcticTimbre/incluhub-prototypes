@@ -431,7 +431,7 @@
       <div class="top-right">
         <button class="icon-btn" title="Calendar"><span data-i="cal"></span></button>
         <button class="icon-btn" title="Notifications" onclick="document.getElementById('notif').classList.toggle('open')"><span data-i="bell"></span><span class="ping"></span></button>
-        <div class="me"><span class="av" style="width:40px;height:40px;background:#2E2925;font-size:14px">SS</span><div><b>Shiva Singh</b><small>Brand Admin</small></div><span data-i="chev" class="muted"></span></div>
+        <div class="me"><span class="av" style="width:40px;height:40px;background:#2E2925;font-size:14px">SS</span><div><b>Aravind</b><small>Brand Admin</small></div><span data-i="chev" class="muted"></span></div>
       </div>
       <div class="card notif" id="notif"></div>
     </header>
@@ -615,7 +615,7 @@ const chats = {
     {n:'elevX', brand:true, t:'9:30 AM', txt:'Good morning, creators 👋 The <b>Everyday Movement</b> brief is live — real people, real moments: work, travel, downtime. Responses close on <b>20 October</b>.', re:[['🤍',38],['🔥',14]]},
     {n:'Aisha Khan', role:'Photographer', t:'9:42 AM', txt:'Love the direction. Are we shooting in natural light only, or is studio okay for the product details?', re:[['👀',4]], replies:3},
     {n:'Diya Nair', role:'UGC Creator', t:'9:51 AM', txt:'The “Work | Travel | Everyday” moodboard is so good. That linen texture shot 😍', re:[['🤍',9]]},
-    {n:'Shiva Singh', me:true, role:'Brand', t:'10:04 AM', txt:'@Aisha natural light is preferred — studio is fine for close-ups of fabric and stitching. Full brief is in #upcoming-campaigns.', re:[['🙏',6]]},
+    {n:'Aravind', me:true, role:'Brand', t:'10:04 AM', txt:'@Aisha natural light is preferred — studio is fine for close-ups of fabric and stitching. Full brief is in #upcoming-campaigns.', re:[['🙏',6]]},
     {n:'Arjun Rao', role:'Stylist', t:'10:12 AM', txt:'Perfect. I’ll put together a few work-to-weekend layering options.'},
   ],
   opportunities: [
@@ -638,7 +638,7 @@ const chats = {
   team: [
     {day:'20 Sep 2026'},
     {n:'Karthik Varma', role:'Founder', t:'10:00 AM', txt:'Hi team, excited to introduce our Brand Admin who’ll lead creator collaborations and community on elevX Network.', intro:true, re:[['❤️',12],['👍',6]], replies:5},
-    {n:'Shiva Singh', me:true, role:'Brand', t:'10:05 AM', txt:'Thanks, Karthik! I’ll share the Everyday Movement creator plan and our first shortlist by EOD.', re:[['❤️',8],['🎉',5]]},
+    {n:'Aravind', me:true, role:'Brand', t:'10:05 AM', txt:'Thanks, Karthik! I’ll share the Everyday Movement creator plan and our first shortlist by EOD.', re:[['❤️',8],['🎉',5]]},
     {day:'Today'},
     {n:'Nisha Gupta', role:'Design', t:'9:12 AM', txt:'Colour poll is in — Stone Grey leads with 34%. Locking it as the hero colourway for the overshirt. Off-White as secondary?', re:[['👍',4]]},
     {n:'Vikram Shah', role:'Content', t:'9:20 AM', txt:'Agreed. Incluhub surfaced 8 new matches for Everyday Movement — Rohan’s film work is a great fit.', re:[['👀',3]]},
@@ -699,7 +699,7 @@ const renderers = {};
 renderers.home = () => `
 <div class="scroll"><div class="pad">
   <div class="greet">
-    <div><div class="eyebrow">Monday, 12 October 2026</div><div class="h1" style="margin-top:8px">Good morning, Shiva.</div><p class="muted" style="margin-top:6px">Here’s what’s happening across elevX Network today.</p></div>
+    <div><div class="eyebrow">Monday, 12 October 2026</div><div class="h1" style="margin-top:8px">Good morning, Aravind.</div><p class="muted" style="margin-top:6px">Here’s what’s happening across elevX Network today.</p></div>
     <div class="row"><button class="btn ghost" onclick="go('discover')">${I('compass')}Discover talent</button><button class="btn primary" onclick="openModal()">${I('plus')}New post</button></div>
   </div>
   <div class="stats">
@@ -813,7 +813,7 @@ renderers.polls = () => {
   <div class="page-head"><div><div class="h1">Polls & Feedback</div><p>Ask your community. Hear what resonates. Decide with confidence.</p></div><button class="btn primary" onclick="openModal('Poll')">${I('plus')}Create poll</button></div>
   <div class="tabs">${['Active (2)','Closed (7)','Drafts (1)'].map((t,i)=>`<button class="tab ${i===0?'active':''}" onclick="tabSwitch(this)">${t}</button>`).join('')}</div>
   <article class="card post">
-    <div class="post-head">${av('Shiva Singh',44)}<div style="flex:1"><div class="row"><b>Shiva Singh</b><span class="chip official">Brand</span></div><small>2 days ago · Visible to all creators</small></div><span class="chip amber">Closes in 2 days</span><button class="icon-btn">${I('more')}</button></div>
+    <div class="post-head">${av('Aravind',44)}<div style="flex:1"><div class="row"><b>Aravind</b><span class="chip official">Brand</span></div><small>2 days ago · Visible to all creators</small></div><span class="chip amber">Closes in 2 days</span><button class="icon-btn">${I('more')}</button></div>
     <div class="h2" style="font-size:28px">Which colourway should lead the Everyday Overshirt?</div>
     <p style="color:var(--ink2);margin-top:6px">We’re finalising the hero piece for Everyday Movement and would love your honest opinion. Which colour would you and your audience actually wear every day?</p>
     <div class="poll-opts">${pollOpts.map(([n,c],i)=>`<button class="popt ${myVote===i?'sel':''}" onclick="myVote=${i};go('polls');toast('Vote recorded: ${n}')"><div class="pic">${bag(c,100)}</div><div class="lab"><span class="radio"></span>${n}</div></button>`).join('')}</div>
@@ -821,7 +821,7 @@ renderers.polls = () => {
     <div class="post-foot"><button>${I('heart')}Like</button><button>${I('comment')}Comment</button><button>${I('share')}Share</button><span class="r muted">32 comments</span></div>
     ${[['Aisha Khan','Photographer','2 days ago','Stone Grey photographs beautifully in natural light — calm and easy to pair with anything. 🤍',12],['Arjun Rao','Stylist','2 days ago','Off-White for summer layering. Works from office to weekend without trying too hard.',8],['Diya Nair','UGC Creator','1 day ago','Washed Black! My audience lives in black basics — it would sell out on travel reels.',10]].map(([n,r,w,t,l])=>`
       <div class="comment">${av(n,36)}<div><div><b>${n}</b> <span class="small">· ${r} · ${w}</span></div><div style="color:var(--ink2)">${t}</div><div class="comment-actions"><button>Reply</button><button class="row" style="gap:4px">${I('heart')}${l}</button></div></div></div>`).join('')}
-    <div class="input-row">${av('Shiva Singh',34)}<div class="input"><input placeholder="Add a comment…" />${I('smile')}</div><button class="send">${I('send')}</button></div>
+    <div class="input-row">${av('Aravind',34)}<div class="input"><input placeholder="Add a comment…" />${I('smile')}</div><button class="send">${I('send')}</button></div>
   </article>
 
   <article class="card mini-poll">
@@ -912,7 +912,7 @@ function msgRow(m){
   return `<div class="msg">${a}<div style="flex:1;min-width:0">
     <div><span class="name">${m.n}</span>${m.brand?'<span class="chip official role">Official</span>':m.role?`<span class="chip role">${m.role}</span>`:''}<span class="time">${m.t}</span></div>
     <p>${m.txt}</p>
-    ${m.intro?`<div class="intro-card"><div class="ph" style="${portrait('Shiva Singh')}"></div><div><div class="eyebrow">Introducing</div><div class="serif" style="font-size:30px;line-height:1.1;margin-top:4px">Shiva Singh</div><div class="serif" style="font-size:18px;color:var(--ink2)">Brand Admin</div><div class="divider" style="width:40px;margin:12px 0"></div><div class="serif" style="font-style:italic;color:var(--ink2);font-size:16px">“Building meaningful creator partnerships that bring elevX{RQ}s vision to life.”</div></div></div>`:''}
+    ${m.intro?`<div class="intro-card"><div class="ph" style="${portrait('Aravind')}"></div><div><div class="eyebrow">Introducing</div><div class="serif" style="font-size:30px;line-height:1.1;margin-top:4px">Aravind</div><div class="serif" style="font-size:18px;color:var(--ink2)">Brand Admin</div><div class="divider" style="width:40px;margin:12px 0"></div><div class="serif" style="font-style:italic;color:var(--ink2);font-size:16px">“Building meaningful creator partnerships that bring elevX{RQ}s vision to life.”</div></div></div>`:''}
     ${m.file?`<div class="attach"><span class="pdf">PDF</span><div style="flex:1"><b style="font-weight:500;font-size:13px">${m.file[0]}</b><div class="muted" style="font-size:11.5px">${m.file[1]}</div></div>${I('download')}</div>`:''}
     ${m.re?`<div class="reacts">${m.re.map(([e,c])=>`<button class="react" onclick="this.classList.toggle('mine')">${e} ${c}</button>`).join('')}<button class="react muted">${I('smile')}</button></div>`:''}
     ${m.replies?`<div class="thread-link"><div class="stack">${['Nisha Gupta','Vikram Shah','Tanya Desai'].map(n=>av(n,20)).join('')}</div>${m.replies} replies <span class="muted" style="font-weight:400">· Last reply 10:20 AM</span></div>`:''}
@@ -922,21 +922,21 @@ function sendMsg(key){
   const ta = document.getElementById('compose'); const v = ta.value.trim(); if(!v) return;
   const t = new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
   if(key.startsWith('dm:')){ (dmThreads[key.slice(3)] ||= fallbackDM(key.slice(3))).push({me:true,t,txt:v.replace(/</g,'&lt;')}); }
-  else (chats[key] ||= []).push({n:'Shiva Singh', me:true, role:'Brand', t, txt:v.replace(/</g,'&lt;')});
+  else (chats[key] ||= []).push({n:'Aravind', me:true, role:'Brand', t, txt:v.replace(/</g,'&lt;')});
   go('chat', key); setTimeout(()=>document.getElementById('compose')?.focus(),0);
 }
 function threadPanel(){
   return `<div class="between"><div><div class="h3" style="font-size:18px">Thread</div><small class="muted">Team announcement</small></div><button class="icon-btn">${I('x')}</button></div>
   <div class="card" style="padding:14px;margin:14px 0;box-shadow:none"><div class="row" style="align-items:flex-start">${av('Karthik Varma',36)}<div><b style="font-weight:600;font-size:13px">Karthik Varma</b> <small class="muted">10:00 AM</small><p style="color:var(--ink2);font-size:13px">We’re excited to introduce our Brand Admin who will lead creator collaborations.</p></div></div></div>
   <small class="muted">5 replies</small>
-  ${[['Shiva Singh','10:05 AM','Thank you, Arjun! Excited to work with all of you.'],['Nisha Gupta','10:12 AM','Welcome aboard, Shiva!'],['Vikram Shah','10:15 AM','Looking forward to working together.'],['Tanya Desai','10:18 AM','Excited for what’s coming! ✨'],['Siddharth Rao','10:20 AM','Let’s make this bigger! 🚀']].map(([n,t,x])=>`<div class="comment">${av(n,34)}<div><b>${n}</b> <span class="small">${t}</span><div style="color:var(--ink2);font-size:13px">${x}</div></div></div>`).join('')}
+  ${[['Aravind','10:05 AM','Thank you, Arjun! Excited to work with all of you.'],['Nisha Gupta','10:12 AM','Welcome aboard, Aravind!'],['Vikram Shah','10:15 AM','Looking forward to working together.'],['Tanya Desai','10:18 AM','Excited for what’s coming! ✨'],['Siddharth Rao','10:20 AM','Let’s make this bigger! 🚀']].map(([n,t,x])=>`<div class="comment">${av(n,34)}<div><b>${n}</b> <span class="small">${t}</span><div style="color:var(--ink2);font-size:13px">${x}</div></div></div>`).join('')}
   <div class="input">${'<input placeholder="Reply in thread…" />'}${I('smile')}</div>
   <div class="divider"></div>
   <div class="between"><div class="h3">Shared files</div><button class="muted" style="font-size:12px" onclick="go('files')">View all</button></div>
   ${[['folder','Creator Strategy 2026','8 items'],['file','Brand Deck.pdf','12.4 MB'],['file','Q4 Creator Budget.xlsx','860 KB']].map(([i,a,b])=>`<div class="list-item" style="align-items:center"><span class="icon-btn" style="background:var(--soft)">${I(i)}</span><div><b style="font-weight:500">${a}</b><div class="muted" style="font-size:12px">${b}</div></div></div>`).join('')}`;
 }
 function channelPanel(ch,isInt){
-  const mem = isInt ? ['Karthik Varma','Nisha Gupta','Vikram Shah','Tanya Desai','Siddharth Rao','Shiva Singh'] : ['Aisha Khan','Rohan Mehta','Meera Sharma','Arjun Rao','Diya Nair','Kabir Ahuja','Naina Reddy'];
+  const mem = isInt ? ['Karthik Varma','Nisha Gupta','Vikram Shah','Tanya Desai','Siddharth Rao','Aravind'] : ['Aisha Khan','Rohan Mehta','Meera Sharma','Arjun Rao','Diya Nair','Kabir Ahuja','Naina Reddy'];
   return `<div class="eyebrow">About this channel</div><div class="h2" style="margin:6px 0 4px">${isInt?'':'#'}${ch.name}</div><p class="muted">${ch.desc}</p>
   <div class="row" style="margin:14px 0;gap:8px">${isInt?`<span class="chip">${I('lock')}Team only</span>`:`<span class="chip green">Creators can post</span>`}<span class="chip">${ch.members} members</span></div>
   <div class="divider"></div>
@@ -954,7 +954,7 @@ function dmView(n){
     <div class="chat-head"><button class="icon-btn" onclick="go('home')">${I('back')}</button><span class="dm-av">${av(n,44)}</span><div style="flex:1"><div class="t">${n}${p.online?'<span style="width:8px;height:8px;border-radius:50%;background:#5DBB6E;margin-left:4px"></span>':''}</div><small>${p.role} · ${p.city}</small></div>
       <button class="icon-btn">${I('video')}</button><button class="icon-btn">${I('phone')}</button><button class="icon-btn">${I('more')}</button></div>
     <div class="msgs">${msgs.map(m=> m.day?`<div class="day"><span>${m.day}</span></div>` :
-      `<div class="bub-row ${m.me?'me':''}">${m.me?av('Shiva Singh',30):av(n,30)}<div class="bub">${m.txt}
+      `<div class="bub-row ${m.me?'me':''}">${m.me?av('Aravind',30):av(n,30)}<div class="bub">${m.txt}
         ${m.file?`<div class="attach" style="margin-top:10px"><span class="pdf">PDF</span><div style="flex:1"><b style="font-weight:500;font-size:13px">${m.file[0]}</b><div class="muted" style="font-size:11.5px">${m.file[1]}</div></div>${I('download')}</div>`:''}
         ${m.atts?`<div class="att-row">
           <div class="att-tile"><div class="tp" style="background:var(--soft)"><span class="pdf">PDF</span></div><div class="nm">Campaign_Brief.pdf<small>2.4 MB</small></div></div>
@@ -1017,7 +1017,7 @@ const aiCanned = {
 renderers.ai = () => {
   const now = '10:24 AM';
   const aiRow = inner => `<div class="a-row"><span class="ai-orb sm">${I('spark')}</span><div class="body"><div class="row" style="gap:8px;margin-bottom:6px"><b style="font-weight:600">elevX AI</b><span class="tm">${now}</span></div>${inner}</div></div>`;
-  const userRow = (txt,t=now) => `<div class="u-row"><div><div class="u-bub">${txt}</div><div class="tm" style="text-align:right;margin-top:4px">${t}</div></div>${av('Shiva Singh',38)}</div>`;
+  const userRow = (txt,t=now) => `<div class="u-row"><div><div class="u-bub">${txt}</div><div class="tm" style="text-align:right;margin-top:4px">${t}</div></div>${av('Aravind',38)}</div>`;
   const recCard = c => `<div class="rec-card"><div class="ph" style="${portrait(c.n)}">${initials(c.n)}<span class="match">${c.m}% match</span></div>
     <div style="flex:1;min-width:0;display:flex;flex-direction:column"><div class="row" style="gap:6px"><b>${c.n}</b><span class="verified">${I('check')}</span></div>
       <div class="tags" style="margin-bottom:8px">${c.t.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
